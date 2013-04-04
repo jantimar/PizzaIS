@@ -3,8 +3,11 @@ package test;
 import java.util.Arrays;
 import java.util.List;
 
-import Pizzeria.Pizza;
-import Pizzeria.Stock;
+import pizzeria.Guest;
+import pizzeria.Order;
+import pizzeria.Pizza;
+import pizzeria.Stock;
+
 
 /** docasna trieda urcena pre test nedokoncenej aplikacie */
 public class Test {
@@ -17,5 +20,7 @@ public class Test {
 		List<Stock> stockMargarita = Arrays.asList( Stock.stockWithID(0), Stock.stockWithID(1));
 		
 		Pizza.newPizza(0, "Margarita", stockMargarita);		
+		
+		new Order(0,new Guest(), Pizza.getAllPizza());
 	}
 }

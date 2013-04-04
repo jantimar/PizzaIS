@@ -1,7 +1,6 @@
-package Pizzeria;
+package pizzeria;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**Trieda reprezentujuca pizzu */
@@ -19,7 +18,7 @@ public class Pizza {
 	
 	/**privatny konstruktor ze by niekto nevytvoril pizze z 2 rovnakymi pizzaID v programe */
 	private Pizza(int pizzaID,String name, List<Stock> stocks)
-	{		
+	{			
 		this.pizzaID = pizzaID; 
 		this.stocks = stocks;
 		this.name = name;
@@ -42,8 +41,9 @@ public class Pizza {
 	/**vrati kopiu zoznamu vsetkych pizz */
 	public static List<Pizza> getAllPizza()
 	{
-		List<Pizza> copyPizza = new ArrayList<Pizza>();
-		Collections.copy(copyPizza,pizzaList);
+		//TODO hadzalo chybu teraz sa robi z rovnakymu referenciami teda nie z kopiou , potrebne prerobit
+		//Collection.clone(copyPizza,pizzaList);
+		List<Pizza> copyPizza = new ArrayList<Pizza>(pizzaList);
 		return copyPizza;
 	}
 	

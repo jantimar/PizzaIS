@@ -1,4 +1,4 @@
-package Pizzeria;
+package pizzeria;
 
 import java.util.ArrayList;
 import java.util.List;
