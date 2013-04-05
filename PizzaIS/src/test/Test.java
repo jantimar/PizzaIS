@@ -3,10 +3,13 @@ package test;
 import java.util.Arrays;
 import java.util.List;
 
-import pizzeria.Guest;
 import pizzeria.Order;
+import pizzeria.Order.State;
 import pizzeria.Pizza;
+import pizzeria.RegistredUser;
 import pizzeria.Stock;
+
+
 
 
 /** docasna trieda urcena pre test nedokoncenej aplikacie */
@@ -21,6 +24,8 @@ public class Test {
 		
 		Pizza.newPizza(0, "Margarita", stockMargarita);		
 		
-		new Order(0,new Guest(), Pizza.getAllPizza());
+		Order x = new Order(0,new RegistredUser(0,"Jan","Hrasko","Kosicka Polianka xx",10.0f), Pizza.getAllPizza());
+		
+		x.setState(State.Finished);
 	}
 }

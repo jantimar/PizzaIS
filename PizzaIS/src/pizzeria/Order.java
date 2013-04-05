@@ -1,7 +1,14 @@
 package pizzeria;
 
+import helpClass.RestClient;
+import helpClass.RestClient.RequestMethod;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONObject;
+
+
 
 /**Trieda reprezentujuca objednavku */
 public class Order {
@@ -67,6 +74,26 @@ public class Order {
 	/**nastavi objednavke stav na stav newState */
 	public void setState(State newState)
 	{
+		System.out.println("Vola sa zmena stavu");
 		state = newState;
+		
+		//TODO toto pojde neskor do Aspektu
+		// poslanie zmeny stavu na server
+		if(client instanceof RegistredUser)
+		{
+			RestClient restClient = new RestClient("http://pizzais.apphb.com/order/changestate");
+			JSONObject obj = new JSONObject();
+			try {
+				obj.put("State", state);
+				obj.put("OrderID",orderID);
+				obj.put("ClientID",((RegistredUser)client).getClientID());
+				restClient.SetPostParam(obj.toString());
+				restClient.Execute(RequestMethod.POST);
+				String response = restClient.getResponse();
+				System.out.println("response " + response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}		
 	}
 }
