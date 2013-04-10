@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**trieda reprezentujuca surovinu */
-public class Stock {
+public class Ingredient {
 	
 	/**zoznam vsetkych doposial inicializovanych surovin */
-	private static List<Stock> stockList = new ArrayList<Stock>();
+	private static List<Ingredient> ingredientList = new ArrayList<Ingredient>();
 	
 	/**ID suroviny ktore je v globalnej databaze programu */
-	private final int stockID;
+	private final int ingredientID;
 	/**nazov suroviny */
 	private String name;
 	/**mnozstvo danej suroviny */
@@ -21,19 +21,19 @@ public class Stock {
 
 	
 	/**privatny konstruktor vytvoarajuci surovinu*/
-	private Stock(int stockID,String name,int count,int prize)
+	private Ingredient(int stockID,String name,int count,int prize)
 	{
-		this.stockID = stockID;
+		this.ingredientID = stockID;
 		this.name = name;
 		this.count = count;
 		this.prize = prize;
-		stockList.add(this);
+		ingredientList.add(this);
 	}
 	
 	/**inicializuje novu surovinu ak uz surovina z danym stockID existuje iba ju prepise a vrati existujucu zo zmenenymi hodnotami */
-	public static Stock newStock(int stockID,String name,int count,int prize)
+	public static Ingredient newIngredient(int stockID,String name,int count,int prize)
 	{
-		Stock existStock = stockWithID(stockID);
+		Ingredient existStock = ingredientWithID(stockID);
 		if(existStock != null)
 		{
 			existStock.count = count;
@@ -41,7 +41,7 @@ public class Stock {
 			existStock.prize = prize;
 			return existStock;
 		}
-		return new Stock(stockID,name,count,prize);
+		return new Ingredient(stockID,name,count,prize);
 	}
 	
 	/**zmeni mnozstvo suroviny o hodnotu changeCount */
@@ -63,9 +63,9 @@ public class Stock {
 	}
 	
 	/**vrati ID suroviny ktore je v databaze */
-	public int getStockID()
+	public int getIngredientID()
 	{
-		return stockID;
+		return ingredientID;
 	}
 	
 	/**zmeni cenu suroviny o hodnotu changePrize */
@@ -88,11 +88,11 @@ public class Stock {
 	
 	
 	/**vrati pizzu z ID pizze ak je v zozname mojich pizz ak nie vrati null */
-	public static Stock stockWithID(int stockID)
+	public static Ingredient ingredientWithID(int stockID)
 	{
-		for(Stock actualStock : stockList)
+		for(Ingredient actualStock : ingredientList)
 		{
-			if(actualStock.getStockID() == stockID)
+			if(actualStock.getIngredientID() == stockID)
 			{
 				return actualStock;
 			}

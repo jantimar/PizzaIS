@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 
 /**Trieda reprezentujuca objednavku */
-public class Order {
+public abstract class AOrder {
 
 	/**enumeracny typ stavov ktore moze objednavka dosiahnut */
 	public enum State { New, InProgress, Completed, Finished, Repayment}
@@ -21,12 +21,12 @@ public class Order {
 	/**id objednavky */
 	private int orderID;
 	/**klient ktory si objednal pizzu */
-	private Client client;
+	private AClient client;
 	/**pizze ktore su na objednavke */
 	private List<Pizza> pizzas;
 	
 	/**konstruktor vytvarajuci objednavku */
-	public Order(int orderID,Client client,List<Pizza> pizzas)
+	public AOrder(int orderID,AClient client,List<Pizza> pizzas)
 	{
 		this.state = State.New;
 		this.orderID = orderID;
@@ -43,14 +43,25 @@ public class Order {
 	}
 	
 	/**vrati sumu ktoru ma zakaznik zaplatit za objednavku */
-	public int getOrderBill()
+	public float getOrderBill()
 	{
-		int bill = 0;
+		float bill = 0;
 		for(Pizza actualPizza : pizzas)
 		{
 			bill += actualPizza.getPrize();
 		}
 		return bill;
+	}
+	
+	/**vrati sumu ktora je potrebna na vytvorenie objednavky*/
+	public float getOrderOutcomme()
+	{
+		float prize = 0;
+		for(Pizza actualPizza : pizzas)
+		{
+			prize += actualPizza.getIngredientPrize();
+		}
+		return prize;
 	}
 	
 	/**vrati ID objednavky ktore sa pouziva v databaze pri objednavke */ 
@@ -60,7 +71,7 @@ public class Order {
 	}
 	
 	/**vrati klienta ktory si objednal jedlo */
-	public Client getClient()
+	public AClient getClient()
 	{
 		return client;
 	}
@@ -82,6 +93,7 @@ public class Order {
 		if(client instanceof RegistredUser)
 		{
 			RestClient restClient = new RestClient("http://pizzais.apphb.com/order/changestate");
+			//RestClient restClient = new RestClient("http://localhost:54387/order/changestate");
 			JSONObject obj = new JSONObject();
 			try {
 				obj.put("State", state);
@@ -93,7 +105,7 @@ public class Order {
 				System.out.println("response " + response);
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
+			}			
 		}		
 	}
 }
