@@ -12,11 +12,11 @@ public class Waiter extends AStuff{
 	}
 
 	/**prijme objednavku z restauracie a nasladne ju vytvory do systemu */
-	public AOrder makeOrder(int orderID,AClient client,List<Pizza> pizzas)
+	public AOrder makeOrder(AClient client,List<Pizza> pizzas)
 	{
 		//TODO vyplata za spravenu pracu moze by riesena tiez aspektom
 		super.pizzaShop.addOutcomme(salary);
-		AOrder order = new PersonalOrder(orderID, client, pizzas);
+		AOrder order = new PersonalOrder(client, pizzas);
 		return order;
 	}
 	

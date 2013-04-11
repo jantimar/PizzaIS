@@ -31,7 +31,7 @@ public class Ingredient {
 	}
 	
 	/**inicializuje novu surovinu ak uz surovina z danym stockID existuje iba ju prepise a vrati existujucu zo zmenenymi hodnotami */
-	public static Ingredient newIngredient(int stockID,String name,int count,int prize)
+	public static Ingredient createIngredient(int stockID,String name,int count,int prize)
 	{
 		Ingredient existStock = ingredientWithID(stockID);
 		if(existStock != null)

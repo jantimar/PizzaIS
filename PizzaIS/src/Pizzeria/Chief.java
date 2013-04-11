@@ -18,8 +18,6 @@ public class Chief extends AStuff{
 			super.pizzaShop.addOutcomme(order.getOrderOutcomme());
 			//TODO vyplata za spravenu pracu moze by riesena tiez aspektom
 			super.pizzaShop.addOutcomme(salary);
-			//TODO zmena stavu riesit aspektom
-			order.setState(State.Completed);
 		}
 		else
 		{

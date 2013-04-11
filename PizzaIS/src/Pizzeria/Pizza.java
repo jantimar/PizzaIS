@@ -26,7 +26,7 @@ public class Pizza {
 	}
 	
 	/**bud funkcia vytvori novu pizzu a tu vrati alebo ak uz existuje pizza z rovankym pizzaID zmeni iba jej name a suroviny */
-	public static Pizza newPizza(int pizzaID,String name, List<Ingredient> ingredients)
+	public static Pizza createPizza(int pizzaID,String name, List<Ingredient> ingredients)
 	{
 		Pizza existPizza = pizzaWithID(pizzaID);
 		if(existPizza != null)

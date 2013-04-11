@@ -26,9 +26,9 @@ public abstract class AOrder {
 	private List<Pizza> pizzas;
 	
 	/**konstruktor vytvarajuci objednavku */
-	public AOrder(int orderID,AClient client,List<Pizza> pizzas)
+	public AOrder(AClient client,List<Pizza> pizzas)
 	{
-		this.state = State.New;
+		//TODO nastavit aspektom
 		this.orderID = orderID;
 		this.client = client;
 		this.pizzas = pizzas;
