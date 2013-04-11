@@ -30,13 +30,13 @@ public aspect AspectPizzaIS
 	pointcut WaiterTakeOrder(AOrder order) : call(* Waiter.takeOrder(..))&& args(order);	
 	
 	// pri vytvoreni objektu AOrder
-	pointcut CreateOrder() : execution(public AOrder.new(..));
+	pointcut CreateOrder(AOrder order) : execution(public AOrder.new(..)) && target(order);
 	
-	pointcut SetState(State newState) : call(* AOrder.setState(..)) && args(newState);	//TODO zisit ako dostat s tohto objekt na ktorom sa to vola
+	pointcut SetState(AOrder order) : call(* AOrder.setState(..)) && target(order);	
 	
 	
 	
-	after() returning (AOrder order) : CreateOrder()
+	after(AOrder order) : CreateOrder(order)
 	{
 		//TODO zaregistrovat ju do datbaazy a ulozit jej id
 		order.setState(State.New);
@@ -71,25 +71,26 @@ public aspect AspectPizzaIS
 	{
 		//throw new Exception("");
 	}
-	
-	before(State newState) : SetState(newState)
+
+	//before(State newState) : SetState(newState)
+	after(AOrder order) : SetState(order)
 	{
-//		if(client instanceof RegistredUser)
-//		{
-//			RestClient restClient = new RestClient("http://pizzais.apphb.com/order/changestate");
-//			//RestClient restClient = new RestClient("http://localhost:54387/order/changestate");
-//			JSONObject obj = new JSONObject();
-//			try {
-//				obj.put("State", state);
-//				obj.put("OrderID",orderID);
-//				obj.put("ClientID",((RegistredUser)client).getClientID());
-//				restClient.SetPostParam(obj.toString());
-//				restClient.Execute(RequestMethod.POST);
-//				String response = restClient.getResponse();
-//				System.out.println("response " + response);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}			
-//		}	
+		if(order.getClient() instanceof RegistredUser)
+		{
+			RestClient restClient = new RestClient("http://pizzais.apphb.com/order/changestate");
+			//RestClient restClient = new RestClient("http://localhost:54387/order/changestate");
+			JSONObject obj = new JSONObject();
+			try {
+				obj.put("State", order.getState());
+				obj.put("OrderID",order.getOrderID());
+				obj.put("ClientID",((RegistredUser)order.getClient()).getClientID());
+				restClient.SetPostParam(obj.toString());
+				restClient.Execute(RequestMethod.POST);
+				//String response = restClient.getResponse();
+				//System.out.println("response " + response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}			
+		}	
 	}
 }
