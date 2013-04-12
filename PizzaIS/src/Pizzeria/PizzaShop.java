@@ -46,23 +46,38 @@ public class PizzaShop {
 		deliver = new Deliver("Jan","Hrasko", 3.0f,this);
 	}
 
+	
+	public void makeOrder(AOrder order)
+	{
+		chief.makePizza(order);
+	}
+	
+	
 	/**objednavka z internetu */
 	public void receiveInternetOrder(List<Pizza> pizzas,AClient client)
 	{
 		//TODO pomocou aspektu zaregistrovat objednavku a cislo objednavky pouzit vo volani makeOrder
-		AOrder order = deliver.makeOrder(client, pizzas);
-		chief.makePizza(order);
+		deliver.makeOrder(client, pizzas);
+	}
+	
+	public void takeInternetOrder(AOrder order)
+	{
 		deliver.takeOrder(order);
 	}
+	
 	
 	/**osobna objednavka */
 	public void receivePersonalOrder(List<Pizza> pizzas,AClient client)
 	{
 		//TODO pomocou aspektu zaregistrovat objednavku a cislo objednavky pouzit vo volani makeOrder
-		AOrder order = waiter.makeOrder(client, pizzas);
-		chief.makePizza(order);
+		waiter.makeOrder(client, pizzas);
+	}
+	
+	public void takePersonalOrder(AOrder order)
+	{
 		waiter.takeOrder(order);
 	}
+	
 
 	/**prijem vinancií */
 	public void addIncomme(float addIncomme) {
