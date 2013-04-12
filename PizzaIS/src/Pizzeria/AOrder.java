@@ -86,26 +86,6 @@ public abstract class AOrder {
 	public void setState(State newState)
 	{
 		System.out.println("Vola sa zmena stavu");
-		state = newState;
-		
-		//TODO toto pojde neskor do Aspektu
-		// poslanie zmeny stavu na server
-		if(client instanceof RegistredUser)
-		{
-			RestClient restClient = new RestClient("http://pizzais.apphb.com/order/changestate");
-			//RestClient restClient = new RestClient("http://localhost:54387/order/changestate");
-			JSONObject obj = new JSONObject();
-			try {
-				obj.put("State", state);
-				obj.put("OrderID",orderID);
-				obj.put("ClientID",((RegistredUser)client).getClientID());
-				restClient.SetPostParam(obj.toString());
-				restClient.Execute(RequestMethod.POST);
-				String response = restClient.getResponse();
-				System.out.println("response " + response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}			
-		}		
+		state = newState;			
 	}
 }

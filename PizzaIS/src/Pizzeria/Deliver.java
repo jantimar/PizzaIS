@@ -13,6 +13,7 @@ public class Deliver extends AStuff {
 	}
 
 	/**prijme objednavku z internetu a nasladne ju vytvory do systemu */
+	@StateAnotation(orderState = State.InProgress)
 	public AOrder makeOrder(AClient client,List<Pizza> pizzas)
 	{
 		//TODO vyplata za spravenu pracu moze by riesena tiez aspektom
@@ -21,10 +22,9 @@ public class Deliver extends AStuff {
 	}
 
 	/**odnesie objednavku z internetu */
+	@StateAnotation(orderState = State.Finished)
 	public void takeOrder(AOrder order)
-	{
-		//TODO nastavit stav objednavky na Finished
-		order.setState(State.Finished);		
+	{	
 		//TODO sumu riesit aspektom podla toho ci klient je Registrovany alebo Guest
 		// a ci plati kartov alebo v hotovosti
 		super.pizzaShop.addIncomme(order.getOrderBill());

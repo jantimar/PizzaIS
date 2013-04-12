@@ -10,70 +10,29 @@ import pizzeria.AOrder.State;
 
 /**Aspekty IS pizzerie */
 public aspect AspectPizzaIS
-{
-	//pri volani funkcii makePizza 
-	pointcut MakePizzas(AOrder order) : call(* Chief.makePizza(..))&& args(order);	
+{		
 
-	//pizza stav je zly
-	pointcut MakePizzasError(AOrder order) : call(* Chief.makePizza(..))&& args(order) && if(!order.getState().equals(State.InProgress));	
-
-	//pri volani funkcii makePizza 
-	pointcut DelieverMakeOrder() : call(* Deliver.makeOrder(..));
-		
-	//pri vytvarani objednavky
-	pointcut WaiterMakeOrder() : call(* Waiter.makeOrder(..));
+	pointcut stateChange(StateAnotation state,AOrder order) : execution(* pizzeria.*.*(..)) && args(order) && @annotation(state);
 	
-	//pri odovzdani pizze
-	pointcut DelieverTakeOrder(AOrder order) : call(* Deliver.takeOrder(..))&& args(order);	
-		
-	//pri odovzdani pizze
-	pointcut WaiterTakeOrder(AOrder order) : call(* Waiter.takeOrder(..))&& args(order);	
-	
-	// pri vytvoreni objektu AOrder
-	pointcut CreateOrder(AOrder order) : execution(public AOrder.new(..)) && target(order);
-	
-	pointcut SetState(AOrder order) : call(* AOrder.setState(..)) && target(order);	
+	after(StateAnotation state,AOrder order): stateChange(state,order)
+	{
+		order.setState(state.orderState());
+	}
 	
 	
-	
-	after(AOrder order) : CreateOrder(order)
+	after(AOrder order) : execution(public AOrder.new(..)) && target(order)
 	{
 		//TODO zaregistrovat ju do datbaazy a ulozit jej id
 		order.setState(State.New);
 	}
 	
-	after() returning (AOrder order) : DelieverMakeOrder() 
-	{
-		order.setState(State.InProgress);
-	}
-	
-	after() returning (AOrder order) : WaiterMakeOrder() 
-	{
-		order.setState(State.InProgress);
-	}
-	
-	after(AOrder order) : MakePizzas(order) 
-	{
-		order.setState(State.Completed);
-	}
-	
-	after(AOrder order) : DelieverTakeOrder(order) 
-	{
-		order.setState(State.Finished);
-	}
-	
-	after(AOrder order) : WaiterTakeOrder(order) 
-	{
-		order.setState(State.Finished);
-	}
-	
-	before(AOrder order) : MakePizzasError(order)
+	before(AOrder order) :  call(* Chief.makePizza(..))&& args(order) && if(!order.getState().equals(State.InProgress))
 	{
 		//throw new Exception("");
 	}
 
 	//before(State newState) : SetState(newState)
-	after(AOrder order) : SetState(order)
+	after(AOrder order) : call(* AOrder.setState(..)) && target(order)
 	{
 		if(order.getClient() instanceof RegistredUser)
 		{
