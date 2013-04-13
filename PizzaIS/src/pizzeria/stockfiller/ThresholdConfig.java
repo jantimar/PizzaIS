@@ -3,11 +3,13 @@ package pizzeria.stockfiller;
 import java.util.HashMap;
 import java.util.Map;
 
-import pizzeria.Ingredient;
+import pizzeria.core.stock.Ingredient;
 
 public class ThresholdConfig {
 	
-	private int defaultThreshold = 5;
+	public static final String DEFAULT_CONTEXT_KEY = "thresholdConfig";
+	
+	private int defaultThreshold = 50;
 
 	private Map<Ingredient,Integer> extra = new HashMap<Ingredient,Integer>();
 	
