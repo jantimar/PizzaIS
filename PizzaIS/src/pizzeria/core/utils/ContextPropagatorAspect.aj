@@ -2,7 +2,6 @@ package pizzeria.core.utils;
 
 //import java.lang.reflect.Field;
 import pizzeria.core.PizzaShop;
-import pizzeria.core.orders.IOrder;
 
 public aspect ContextPropagatorAspect {
 	
@@ -13,6 +12,7 @@ public aspect ContextPropagatorAspect {
 		shop.getMealsMenu().setContext(context);
 	}
 
+	
 //	after(PizzaShop shop) returning (Stock stock): 
 //	after(Stock stock,PizzaShop shop): call(Stock.new(..)) && target(stock) && this(shop)
 //	after(PizzaShop shop) returning (Stock stock): call(Stock.new(..)) && this(shop)
@@ -47,11 +47,5 @@ public aspect ContextPropagatorAspect {
 //		}
 //	}
 	
-	
-//	after(PizzaShop shop,IContextContainer context) : 
-//		call(public void PizzaShop.addOrder(IOrder)) && target(shop) && args(context)
-//	{
-//		
-//	}
 	
 }

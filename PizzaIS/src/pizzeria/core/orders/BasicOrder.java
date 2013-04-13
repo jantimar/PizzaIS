@@ -2,7 +2,9 @@ package pizzeria.core.orders;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import pizzeria.core.customers.ICustomer;
 import pizzeria.core.meals.Meal;
@@ -17,6 +19,8 @@ public class BasicOrder implements IOrder {
 	protected OrderState orderState = OrderState.NEW;
 	/** zakaznik ktoremu prislucha objednavka */
 	protected ICustomer customer;
+	/** meta informacie objednavky - napriklad informacie o pracovnikoch ktory ju spracovali */
+	protected Map<String,Object> orderMeta = new HashMap<String,Object>();
 	
 	/**
 	 * Zakaznik
@@ -115,6 +119,21 @@ public class BasicOrder implements IOrder {
 		this.id = id;
 		this.orderState = orderState;
 		this.meals = new ArrayList<Meal>(meals); 
+	}
+
+	@Override
+	public void putMeta(String key, Object data) {
+		this.orderMeta.put(key, data);
+	}
+
+	@Override
+	public Object getMeta(String key) {
+		return this.orderMeta.get(key);
+	}
+
+	@Override
+	public boolean containsMetaKey(String key) {
+		return this.orderMeta.containsKey(key);
 	}
 	
 }

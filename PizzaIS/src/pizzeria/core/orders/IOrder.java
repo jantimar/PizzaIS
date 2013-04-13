@@ -5,8 +5,9 @@ import java.util.List;
 import pizzeria.core.customers.ICustomer;
 import pizzeria.core.meals.Meal;
 import pizzeria.core.utils.ActionUnsuccessfullException;
+import pizzeria.core.utils.IMetaContainer;
 
-public interface IOrder {
+public interface IOrder extends IMetaContainer {
 	public int getId();
 	
 	public float getOrderBill();
@@ -21,4 +22,5 @@ public interface IOrder {
 	public List<Meal> getMealsList();
 	
 	public ICustomer getCustomer();
+	
 }
