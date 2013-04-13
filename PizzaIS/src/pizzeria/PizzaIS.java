@@ -35,14 +35,15 @@ public class PizzaIS {
 		// (takto by sa napriklad odovzdali aj konfiguracne udaje pre databazu, ktora by sa pouzili podobne ako v StockFillerAspect)
 		// - mozno existuje riesenie pouzitim aop ako sa tomu vyhnut - A ZANECHAT PRI TOM OBYCAJNU INSTANCIU PizzaShop a je contextu 
 		appContext.putData(ThresholdConfig.DEFAULT_CONTEXT_KEY, new ThresholdConfig(5));
+//		appContext.putData(key, data)
 		
 		//------------------------
 		
 		Stock stock = shop.getStock();
 		MealsMenu menu = shop.getMealsMenu();
 
-		stock.setContext(appContext);
-		menu.setContext(appContext);
+//		stock.setContext(appContext);
+//		menu.setContext(appContext);
 		
 		Ingredient syr = new Ingredient("gouda",new Float(0.65/100));
 		Ingredient kecup = new Ingredient("kecup",new Float(0.60/450));
