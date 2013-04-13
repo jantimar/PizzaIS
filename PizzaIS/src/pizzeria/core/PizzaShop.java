@@ -1,6 +1,7 @@
 package pizzeria.core;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import pizzeria.core.meals.MealsMenu;
 import pizzeria.core.orders.IOrder;
@@ -48,6 +49,10 @@ public class PizzaShop extends AbstractContextProvider {
 	
 	public void removeOrder(IOrder order){
 		orders.remove(order);
+	}
+	
+	public Collection<IOrder> getOrdersCollection(){
+		return new ArrayList<IOrder>(orders);
 	}
 	
 }
