@@ -2,7 +2,6 @@ package pizzeria.database;
 
 import java.util.List;
 
-import pizzais.mvcore.*;
 import pizzeria.core.utils.IContextContainer;
 
 public class PizzaShopDataContext {
@@ -34,7 +33,7 @@ public class PizzaShopDataContext {
 	 * @param contextContainer
 	 */
 	public void installTo(IContextContainer contextContainer) {
-		contextContainer.setContextData(contextKey, this);
+		contextContainer.putData(contextKey, this);
 	}
 
 	/**

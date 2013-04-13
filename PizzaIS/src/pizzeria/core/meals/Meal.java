@@ -8,9 +8,9 @@ import pizzeria.core.stock.Ingredient;
 import pizzeria.core.stock.IngredientAssoc;
 //import pizzeria.core.stock.Stock;
 //import pizzeria.core.stock.UnsatisfiableQuantityException;
-import pizzeria.core.utils.AbstractContextContainer;
+import pizzeria.core.utils.AbstractContextProvider;
 
-public class Meal extends AbstractContextContainer {
+public class Meal extends AbstractContextProvider {
 
 	public int id = -1;
 	private float price;

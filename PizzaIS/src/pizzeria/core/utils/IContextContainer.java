@@ -12,18 +12,18 @@ public interface IContextContainer {
 	 * @param key
 	 * @param data
 	 */
-	public void setContextData(String key, Object data);
+	public void putData(String key, Object data);
 
 	/**
 	 * Ziska z kontexotvych dat pozadovany kluc
 	 * @param key
 	 */
-	public Object getContextData(String key);
+	public Object getData(String key);
 	/**
 	 * Zistuje ci sa v kontextovych informaciach nachadza pozadovany kluc
 	 * @param key
 	 * @return
 	 */
-	public boolean containsContextKey(String key);
+	public boolean containsKey(String key);
 
 }

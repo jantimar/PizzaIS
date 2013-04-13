@@ -3,22 +3,22 @@ package pizzeria.core.utils;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractContextContainer implements IContextContainer {
+public class HashMapContextContainer implements IContextContainer {
 	
 	private Map<String,Object> contextData = new HashMap<String,Object>();
 	
 	@Override
-	public void setContextData(String key, Object data) {
+	public void putData(String key, Object data) {
 		contextData.put(key, data);
 	}
 
 	@Override
-	public Object getContextData(String key) {
+	public Object getData(String key) {
 		return contextData.get(key);
 	}
 	
 	@Override
-	public boolean containsContextKey(String key){
+	public boolean containsKey(String key){
 		return contextData.containsKey(key);
 	}
 

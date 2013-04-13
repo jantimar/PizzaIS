@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import pizzeria.core.utils.AbstractContextContainer;
+import pizzeria.core.utils.AbstractContextProvider;
 
-public class MealCategory extends AbstractContextContainer {
+public class MealCategory extends AbstractContextProvider {
 
 	private int id = -1;
 	private String name;

@@ -5,10 +5,10 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import pizzeria.core.utils.AbstractContextContainer;
+import pizzeria.core.utils.AbstractContextProvider;
 
 
-public class MealsMenu extends AbstractContextContainer {
+public class MealsMenu extends AbstractContextProvider {
 	
 	private MealCategory defaultCategory = null;
 	

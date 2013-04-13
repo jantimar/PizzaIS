@@ -12,6 +12,7 @@ import pizzeria.core.stock.Ingredient;
 import pizzeria.core.stock.IngredientAssoc;
 import pizzeria.core.stock.Stock;
 import pizzeria.core.utils.ActionUnsuccessfullException;
+import pizzeria.core.utils.HashMapContextContainer;
 import pizzeria.stockfiller.ThresholdConfig;
 import pizzeria.userroles.Cook;
 import pizzeria.userroles.DeliveryGuy;
@@ -27,16 +28,22 @@ public class PizzaIS {
 		
 		PizzaShop shop = new PizzaShop();
 		
+		HashMapContextContainer appContext = new HashMapContextContainer(); 
+		shop.setContext(appContext);
+		
 		// princip nastavenia kontextovych informacii shopu 
 		// (takto by sa napriklad odovzdali aj konfiguracne udaje pre databazu, ktora by sa pouzili podobne ako v StockFillerAspect)
 		// - mozno existuje riesenie pouzitim aop ako sa tomu vyhnut - A ZANECHAT PRI TOM OBYCAJNU INSTANCIU PizzaShop a je contextu 
-		shop.setContextData(ThresholdConfig.DEFAULT_CONTEXT_KEY, new ThresholdConfig(5));
+		appContext.putData(ThresholdConfig.DEFAULT_CONTEXT_KEY, new ThresholdConfig(5));
 		
 		//------------------------
 		
 		Stock stock = shop.getStock();
 		MealsMenu menu = shop.getMealsMenu();
-				
+
+		stock.setContext(appContext);
+		menu.setContext(appContext);
+		
 		Ingredient syr = new Ingredient("gouda",new Float(0.65/100));
 		Ingredient kecup = new Ingredient("kecup",new Float(0.60/450));
 		Ingredient drozdie = new Ingredient("drozdie",new Float(0.35/42));
@@ -50,7 +57,7 @@ public class PizzaIS {
 		stock.addIngredient(drozdie, 200);
 		stock.addIngredient(muka, 5000);
 		stock.addIngredient(sunka, 5000);
-		stock.addIngredient(cestoviny, 5000);
+		stock.addIngredient(cestoviny, 500);
 		
 		Meal pizza = new Meal("pizza",4, Arrays.asList(new IngredientAssoc[]{
 			new IngredientAssoc(muka, 520/4),

@@ -5,10 +5,10 @@ import java.util.List;
 import pizzeria.core.meals.MealsMenu;
 import pizzeria.core.orders.IOrder;
 import pizzeria.core.stock.Stock;
-import pizzeria.core.utils.AbstractContextContainer;
+import pizzeria.core.utils.AbstractContextProvider;
 
 /** Hlavna trieda reprezentujúca obchod */
-public class PizzaShop extends AbstractContextContainer {
+public class PizzaShop extends AbstractContextProvider {
 	
 	/** Poskytuje ingrediencie pre vytvorenie jedal  */
 	private Stock stock;
