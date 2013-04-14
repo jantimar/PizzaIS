@@ -1,36 +1,29 @@
 package pizzeria.core.orders;
 
-import pizzeria.core.userroles.*;
 import pizzeria.core.utils.ActionUnsuccessfullException;
+
+
 
 /**
  * Poskytuje zmenu stavu objednavky pre rozlicne akcie rôl v systeme 
- * @author Michal Vrabel
+ * @author Jan Timar
  *
  */
 public aspect OrderStateAspect {
 
-	//after() : call(Waiter.acceptOrder) - New  
-	after(IOrder order) throws ActionUnsuccessfullException : call(public void IWaiterUserRole+.acceptOrder(IOrder)) && args(order) {
-		order.setState(OrderState.NEW);
+	pointcut stateChangeBefore(IOrder order,BeforeOrderState annotationState) : execution(* pizzeria.userroles.*.*(..)) && args(order) && @annotation(annotationState);
+	
+	pointcut stateChangeAfter(IOrder order,AfterOrderState annotationState) : execution(* pizzeria.userroles.*.*(..)) && args(order) && @annotation(annotationState);
+  
+  
+	before (IOrder order,BeforeOrderState annotationState) throws ActionUnsuccessfullException : stateChangeBefore(order, annotationState)
+	{
+		order.setState(annotationState.orderState());
 	}
 	
-	//before() : call(Cheif.cookOrder) - InProgress
-	before(IOrder order) throws ActionUnsuccessfullException : call(public void ICookUserRole+.cookOrderMeals(IOrder)) && args(order) {
-		order.setState(OrderState.IN_PROGRESS);
+	after (IOrder order, AfterOrderState annotationState) throws ActionUnsuccessfullException : stateChangeAfter(order, annotationState)
+	{
+		order.setState(annotationState.orderState());
 	}
-	
-	//after() : call(Cheif.cookOrder) - Ready
-	after(IOrder order) throws ActionUnsuccessfullException : call(public void ICookUserRole+.cookOrderMeals(IOrder)) && args(order) {
-		order.setState(OrderState.READY);
-	}
-	
-	//before() : call(Delivery.shipOrder) - Shipping
-	before(IOrder order) throws ActionUnsuccessfullException : call(public void IDeliveryUserRole+.shipOrder(IOrder)) && args(order) {
-		order.setState(OrderState.SHIPPING);
-	}
-	//after() : call(Delivery.shipOrder) - Finished
-	after(IOrder order) throws ActionUnsuccessfullException : call(public void IDeliveryUserRole+.shipOrder(IOrder)) && args(order) {
-		order.setState(OrderState.FINISHED);
-	}
+
 }

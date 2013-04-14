@@ -1,6 +1,8 @@
 package pizzeria.userroles;
 
 import pizzeria.core.PizzaShop;
+import pizzeria.core.orders.AfterOrderState;
+import pizzeria.core.orders.BeforeOrderState;
 import pizzeria.core.orders.IOrder;
 
 import pizzeria.core.orders.OrderState;
@@ -19,12 +21,15 @@ public class DeliveryGuy extends AbstractRole implements IDeliveryUserRole, IWai
 	}
 
 	@Override
+	@BeforeOrderState(orderState = OrderState.SHIPPING)
+	@AfterOrderState(orderState = OrderState.FINISHED)
 	public void shipOrder(IOrder order) throws ActionUnsuccessfullException {
 		// na toto pravdepodobne bude asi aj existovat advice ale by tu bola nejaka akcia.
 		order.setState(OrderState.SHIPPING); 
 	}
 
 	@Override
+	@AfterOrderState(orderState = OrderState.NEW)
 	public void acceptOrder(IOrder order) throws ActionUnsuccessfullException {
 		pizzaShop.addOrder(order);
 	}

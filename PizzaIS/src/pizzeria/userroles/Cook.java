@@ -5,7 +5,10 @@ import java.util.List;
 
 import pizzeria.core.PizzaShop;
 import pizzeria.core.meals.Meal;
+import pizzeria.core.orders.AfterOrderState;
+import pizzeria.core.orders.BeforeOrderState;
 import pizzeria.core.orders.IOrder;
+import pizzeria.core.orders.OrderState;
 import pizzeria.core.stock.IngredientAssoc;
 import pizzeria.core.stock.Stock;
 import pizzeria.core.stock.UnsatisfiableQuantityException;
@@ -26,6 +29,8 @@ public class Cook extends AbstractRole implements ICookUserRole {
 	 * @throws CookingImpossibleException
 	 */
 	@Override
+	@BeforeOrderState(orderState = OrderState.IN_PROGRESS)
+	@AfterOrderState(orderState = OrderState.READY)
 	public void cookOrderMeals(IOrder order) throws ActionUnsuccessfullException {
 		
 		List<Meal> meals = order.getMealsList();

@@ -1,6 +1,7 @@
 package pizzeria.userroles;
 
 import pizzeria.core.PizzaShop;
+import pizzeria.core.orders.AfterOrderState;
 import pizzeria.core.orders.IOrder;
 import pizzeria.core.orders.OrderState;
 import pizzeria.core.userroles.IDeliveryUserRole;
@@ -16,7 +17,9 @@ public class RestaurantWaiter extends AbstractRole implements IWaiterUserRole, I
 		this.pizzaShop = shop;
 	}
 
+	
 	@Override
+	@AfterOrderState(orderState = OrderState.NEW)
 	public void acceptOrder(IOrder order) throws ActionUnsuccessfullException {
 		pizzaShop.addOrder(order);
 	}
