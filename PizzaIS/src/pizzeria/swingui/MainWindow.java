@@ -21,6 +21,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
+import java.awt.Font;
 
 public class MainWindow {
 
@@ -104,6 +105,10 @@ public class MainWindow {
 		JLabel lblWaiter = new JLabel("waiter");
 		lblWaiter.setHorizontalAlignment(SwingConstants.TRAILING);
 		panel_2.add(lblWaiter);
+		
+		JButton btnSignOut = new JButton("Sign out");
+		btnSignOut.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		panel_2.add(btnSignOut);
 		
 //		JLabel label = new JLabel("");
 //		frame.getContentPane().add(label);

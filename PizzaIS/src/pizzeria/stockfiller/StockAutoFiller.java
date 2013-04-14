@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import pizzeria.core.stock.Ingredient;
-
-public class ThresholdConfig {
+import pizzeria.core.utils.IContextProvider;
+import pizzeria.core.utils.IPizzaShopExtension;
+public class StockAutoFiller implements IPizzaShopExtension{
 	
-	public static final String DEFAULT_CONTEXT_KEY = "thresholdConfig";
+	public static final String CONTEXT_KEY = StockAutoFiller.class.getName();
 	
-	private int defaultThreshold = 50;
+	private int defaultThreshold;
 
 	private Map<Ingredient,Integer> extra = new HashMap<Ingredient,Integer>();
 	
@@ -22,8 +23,12 @@ public class ThresholdConfig {
 		this.defaultThreshold = threshold;
 	}
 	
-	public ThresholdConfig(int defaultThreshold){
+	public StockAutoFiller(int defaultThreshold){
 		this.defaultThreshold = defaultThreshold;
+	}
+	
+	public StockAutoFiller(){
+		this.defaultThreshold = 50;
 	}
 	
 	
@@ -42,6 +47,11 @@ public class ThresholdConfig {
 			threshold = extra.get(ingredient);
 		}
 		return threshold;
+	}
+	
+	@Override
+	public void installTo(IContextProvider contextProvider) {
+		contextProvider.getContext().putData(CONTEXT_KEY,this);
 	}
 	
 }

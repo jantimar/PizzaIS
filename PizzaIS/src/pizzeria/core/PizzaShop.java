@@ -38,9 +38,14 @@ public class PizzaShop extends AbstractContextProvider {
 	/**konstruktor pizzerie */
 	public PizzaShop() {
 				
-		this.stock = new Stock();
-		this.mealsMenu = new MealsMenu();
+		this.setStock(new Stock());
+		this.setMealsMenu(new MealsMenu());
 	
+	}
+	
+	public PizzaShop(Stock stock, MealsMenu mealsMenu){
+		this.setStock(stock);
+		this.setMealsMenu(mealsMenu);
 	}
 	
 	public void addOrder(IOrder order){

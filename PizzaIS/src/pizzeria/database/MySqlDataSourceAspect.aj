@@ -1,9 +1,23 @@
 package pizzeria.database;
 
-//import pizzeria.utils.IContextContainer;
+import pizzeria.core.PizzaShop;
+
 //import pizzais.mvcore.PizzaShop;
 
-public aspect PizzaShopDataContextInstallationAspect {
+public aspect MySqlDataSourceAspect {
+	
+	
+	private MySqlDataLoader PizzaShop.dataLoader;
+	
+	public MySqlDataLoader PizzaShop.getDataLoader(){
+		return this.dataLoader;
+	}
+	
+	after(PizzaShop shop) : execution(PizzaShop.new(..)) && this(shop) {
+		shop.dataLoader = new MySqlDataLoader();
+		shop.dataLoader.LoadBasicStructure(shop);
+	}
+		
 //	after(PizzaShop pizzashop) : execution(PizzaShop.new(..)) && this(pizzashop) {
 //		if(pizzashop.getContextData("installDatabase").equals(true)){
 //			

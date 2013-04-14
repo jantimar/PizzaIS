@@ -1,7 +1,6 @@
 package pizzeria.core.orders;
 
 import pizzeria.core.utils.ActionUnsuccessfullException;
-
 //import pizzeria.core.userroles.ActionUnsuccessfullException;
 
 /**
@@ -21,4 +20,5 @@ public aspect OrderStateChangePolicyAspect {
 		}
 		
 	}
+	
 }
