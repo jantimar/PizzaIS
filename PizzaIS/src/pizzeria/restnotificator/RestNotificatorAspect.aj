@@ -1,16 +1,13 @@
 package pizzeria.restnotificator;
 
-import helpClass.RestClient;
-import helpClass.RestClient.RequestMethod;
-
-import org.json.JSONObject;
-
 import pizzeria.core.customers.IRegisteredCustomer;
 import pizzeria.core.orders.IOrder;
 
 
 public aspect RestNotificatorAspect {
 
+	//TODO trieda na rie+senie komunikacie
+	
 	//before(State newState) : SetState(newState)
 	after(IOrder order) : call(* IOrder+.setState(..)) && target(order)
 	{

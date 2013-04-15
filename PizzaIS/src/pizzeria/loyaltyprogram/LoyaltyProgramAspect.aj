@@ -10,12 +10,14 @@ public aspect LoyaltyProgramAspect  {
 	
 	private LoyaltyProgram PizzaShop.loyaltyProgram;
 	
+	
 	public LoyaltyProgram PizzaShop.getLoyaltyProgram(){
 		return this.loyaltyProgram;
 	}
 	
+	
 	after(PizzaShop shop) : pizzaShopCreation(shop){
-		shop.loyaltyProgram = new LoyaltyProgram(shop);
+		shop.loyaltyProgram = new LoyaltyProgram(shop);	
 	}
 	
 	

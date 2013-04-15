@@ -10,9 +10,9 @@ import pizzeria.core.utils.IMetaContainer;
 public interface IOrder extends IMetaContainer {
 	public int getId();
 	
-	public float getOrderBill();
-	public float getOrderCost();
-	public float getOrderProfit();
+	public float getOrderBill();	//kolko som zaplatil pre zakaznika
+	public float getOrderCost();	//kolko mna stala
+	public float getOrderProfit();	//rozdiel
 	
 	public OrderState getState();
 	

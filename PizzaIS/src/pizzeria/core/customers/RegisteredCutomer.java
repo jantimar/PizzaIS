@@ -9,6 +9,15 @@ public class RegisteredCutomer implements IRegisteredCustomer {
 	private String name;
 	private String address;
 	private String description;
+	
+	public RegisteredCutomer(String description,int id, String name,String address)
+	{
+		this.description = description;
+		this.id = id;
+		this.name = name;
+		this.address = address;
+	}
+	
 	/**
 	 * Jenoduchy popis
 	 */

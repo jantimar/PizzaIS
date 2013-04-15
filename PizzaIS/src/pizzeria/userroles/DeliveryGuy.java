@@ -24,7 +24,6 @@ public class DeliveryGuy extends AbstractRole implements IDeliveryUserRole, IWai
 	@BeforeOrderState(orderState = OrderState.SHIPPING)
 	@AfterOrderState(orderState = OrderState.FINISHED)
 	public void shipOrder(IOrder order) throws ActionUnsuccessfullException {
-		// na toto pravdepodobne bude asi aj existovat advice ale by tu bola nejaka akcia.
 		order.setState(OrderState.SHIPPING); 
 	}
 

@@ -1,4 +1,4 @@
-package helpClass;
+package pizzeria.restnotificator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
