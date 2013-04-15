@@ -5,37 +5,56 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import pizzeria.core.utils.AbstractContextProvider;
-
-public class MealCategory extends AbstractContextProvider {
+/**
+ * Kategoria jedla. Aktualne nevyuzivane. Ale interne v MealsMenu sa pouziva.
+ * @author Michal Vrabel
+ *
+ */
+public class MealCategory {
 
 	private int id = -1;
 	private String name;
 	
 	private Set<Meal> meals;
-	
+	/**
+	 * Nastavenie id
+	 * @param id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	/**
+	 * Ziskanie id kategorie
+	 * @return
+	 */
 	public int getId() {
 		return id;
 	}
-
+	/**
+	 * Nastavenie mena kategorie
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	/**
+	 * Meno kategorie
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Jedla v kategorii
+	 * @return
+	 */
 	public Collection<Meal> getMealsCollection() {
 		return new ArrayList<Meal>(meals);
 	}
 
 	/**
-	 * 
+	 * Zaregistrovanie jedla do kategorie
 	 * @param meal
 	 */
 	public void registerMeal(Meal meal) {
@@ -43,7 +62,7 @@ public class MealCategory extends AbstractContextProvider {
 	}
 
 	/**
-	 * 
+	 * Odregistorvanie jedla z kategorie
 	 * @param meal
 	 */
 	public void unregisterMeal(Meal meal) {

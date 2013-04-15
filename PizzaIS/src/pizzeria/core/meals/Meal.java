@@ -6,11 +6,11 @@ import java.util.List;
 
 import pizzeria.core.stock.Ingredient;
 import pizzeria.core.stock.IngredientAssoc;
-//import pizzeria.core.stock.Stock;
-//import pizzeria.core.stock.UnsatisfiableQuantityException;
-import pizzeria.core.utils.AbstractContextProvider;
 
-public class Meal extends AbstractContextProvider {
+/**
+ * Jedlo
+ */
+public class Meal {
 
 	public int id = -1;
 	private float price;
@@ -23,31 +23,54 @@ public class Meal extends AbstractContextProvider {
 		return new ArrayList<IngredientAssoc>(ingredientAssocs);
 	}
 	
+	/**
+	 * Pridanie ingrediencie
+	 * @param ingredient
+	 * @param quantity
+	 */
 	public void AddIngredient(Ingredient ingredient, int quantity){
 		ingredientAssocs.add(new IngredientAssoc(ingredient, quantity));
 	}
-
+	/**
+	 * Identifikator
+	 * @return
+	 */
 	public int getId() {
 		return id;
 	}
-
+	/**
+	 * Nastavenie id
+	 * @param id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+	/**
+	 * Cena jedla ktoru musi zaplatit zakaznik
+	 * @return
+	 */
 	public float getPrice() {
 		return price;
 	}
-
+	/**
+	 * Nazov jedla
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
-
+	/**
+	 * Nastavenie ceny ktoru musi zaplatit zakaznik
+	 * @param price
+	 */
 	public void setPrice(float price) {
 		this.price = price;
 	}
-
-	public float getOutcome(){
+	/**
+	 * Suma penazi potrebna pre vytvorenie jedla
+	 * @return
+	 */
+	public float getCost(){
 		float price = 0;
 		for(IngredientAssoc assoc : ingredientAssocs)
 		{
@@ -55,25 +78,29 @@ public class Meal extends AbstractContextProvider {
 		}
 		return price;
 	}
-	
+	/**
+	 * Nastavenie mena
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+	/**
+	 * Kategoria jedna. Aktualne nevyuzivane.
+	 * @return
+	 */
 	public MealCategory getCategory() {
 		return category;
 	}
-
+	/**
+	 * Nastavenie kategorie jedna. Aktualne nevyuzivane
+	 * @param category
+	 */
 	public void setCategory(MealCategory category) {
 		this.category = category;
 	}
 	
 	
-//	public void prepare(Stock stock) throws UnsatisfiableQuantityException {
-//		for(IngredientAssoc assoc : ingredientAssocs){
-//			stock.takeIngredient(assoc.getIngredient(), assoc.getQuantity());
-//		}
-//	}
 	
 	public Meal( String name, float price){
 		this.name = name;
@@ -90,6 +117,12 @@ public class Meal extends AbstractContextProvider {
 		this.price = price;
 		this.ingredientAssocs = new ArrayList<IngredientAssoc>(ingredientAssocs);
 	}
-	
+
+//  priprava jedla	
+//	public void prepare(Stock stock) throws UnsatisfiableQuantityException {
+//		for(IngredientAssoc assoc : ingredientAssocs){
+//			stock.takeIngredient(assoc.getIngredient(), assoc.getQuantity());
+//		}
+//	}
 	
 }

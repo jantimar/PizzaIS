@@ -6,10 +6,9 @@ import java.util.List;
 import pizzeria.core.meals.MealsMenu;
 import pizzeria.core.orders.IOrder;
 import pizzeria.core.stock.Stock;
-import pizzeria.core.utils.AbstractContextProvider;
 
 /** Hlavna trieda reprezentujúca obchod */
-public class PizzaShop extends AbstractContextProvider {
+public class PizzaShop {
 	
 	/** Poskytuje ingrediencie pre vytvorenie jedal  */
 	private Stock stock;
@@ -17,25 +16,61 @@ public class PizzaShop extends AbstractContextProvider {
 	/** Poskytuje dostupne jedla */
 	private MealsMenu mealsMenu;
 	
+	/** Objednavky v obchode */
 	private List<IOrder> orders = new ArrayList<IOrder>();
 	
+	/**
+     * @return Ponuka jedal v obchode 
+	 */
 	public MealsMenu getMealsMenu() {
 		return mealsMenu;
 	}
-
+	
+	/**
+	 * Nastavenie ponuky jedal
+	 * @param mealsMenu
+	 */
 	public void setMealsMenu(MealsMenu mealsMenu) {
 		this.mealsMenu = mealsMenu;
 	}
 
+	/**
+	 * @return Sklad jedal
+	 */
 	public Stock getStock() {
 		return stock;
 	}
-
+	/**
+	 * Nastavenie skladu jedal
+	 * @param stock
+	 */
 	public void setStock(Stock stock) {
 		this.stock = stock;
 	}
+		
+	/**
+	 * Pridanie objednavky. 
+	 * Na pridavane objednavok sa odporuca pouzivat triedy deciace od IWaiterUserRole. 
+	 * @param order
+	 */
+	public void addOrder(IOrder order){
+		orders.add(order);
+	}
+	/**
+ 	 * Odstranenie objednavky.
+ 	 * Na odstranenie objednavok sa odporuca pouzivat triedy deciace od IRemovesOrderUserRole.
+ 	 * @param order 
+	 */
+	public void removeOrder(IOrder order){
+		orders.remove(order);
+	}
+	/**
+	 * @return Zoznam objednavok v obchode
+	 */
+	public Collection<IOrder> getOrdersCollection(){
+		return new ArrayList<IOrder>(orders);
+	}
 	
-	/**konstruktor pizzerie */
 	public PizzaShop() {
 				
 		this.setStock(new Stock());
@@ -47,55 +82,5 @@ public class PizzaShop extends AbstractContextProvider {
 		this.setStock(stock);
 		this.setMealsMenu(mealsMenu);
 	}
-	
-	public void addOrder(IOrder order){
-		orders.add(order);
-	}
-	
-	public void removeOrder(IOrder order){
-		orders.remove(order);
-	}
-	
-	public Collection<IOrder> getOrdersCollection(){
-		return new ArrayList<IOrder>(orders);
-	}
-	
 }
 
-//		//TODO mozno tiez nacitat z databazi zamestnancov 
-//		chief = new Chief("Jozko","Mrkvicka", 5.0f,this);
-//		waiter = new Waiter("Peter","Broskynka", 2.5f,this);
-//		deliver = new Delivery("Jan","Hrasko", 3.0f,this);
-
-//	/**objednavka z internetu */
-//	public void receiveInternetOrder(List<Pizza> pizzas,AbstractClient client)
-//	{
-//		//TODO pomocou aspektu zaregistrovat objednavku a cislo objednavky pouzit vo volani makeOrder
-//		AbstractOrder order = deliver.makeOrder(client, pizzas);
-//		chief.makePizza(order);
-//		deliver.takeOrder(order);
-//	}
-//	
-//	/**osobna objednavka */
-//	public void receivePersonalOrder(List<Pizza> pizzas,AbstractClient client)
-//	{
-//		//TODO pomocou aspektu zaregistrovat objednavku a cislo objednavky pouzit vo volani makeOrder
-//		AbstractOrder order = waiter.makeOrder(client, pizzas);
-//		chief.makePizza(order);
-//		waiter.takeOrder(order);
-//	}
-//
-//	/**prijem vinancií */
-//	public void addIncomme(float addIncomme) {
-//		incomme += addIncomme;
-//	}
-//
-//	/**priratanie vydavok */
-//	public void addOutcomme(float addOutcomme) {
-//		outcomme += addOutcomme;
-//	}
-//
-//	/** vrati celkovy stav pizzerii*/
-//	public float getProfit() {
-//		return (incomme - outcomme);
-//	}

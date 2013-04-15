@@ -10,26 +10,47 @@ import pizzeria.core.utils.ActionUnsuccessfullException;
  */
 public aspect OrderStateAspect {
 
-	//after() : call(Waiter.acceptOrder) - New  
+	/**
+	 * Potom ako IWaiterUserRole prijme objednavku sa nastavi na stav NEW 
+	 * @param order
+	 * @throws ActionUnsuccessfullException
+	 */  
 	after(IOrder order) throws ActionUnsuccessfullException : call(public void IWaiterUserRole+.acceptOrder(IOrder)) && args(order) {
 		order.setState(OrderState.NEW);
 	}
 	
-	//before() : call(Cheif.cookOrder) - InProgress
+	/**
+	 * Pred tym ako ju spracuje ICookUserRole sa nastavi na IN_PROGRESS
+	 * @param order
+	 * @throws ActionUnsuccessfullException
+	 */
 	before(IOrder order) throws ActionUnsuccessfullException : call(public void ICookUserRole+.cookOrderMeals(IOrder)) && args(order) {
 		order.setState(OrderState.IN_PROGRESS);
 	}
 	
-	//after() : call(Cheif.cookOrder) - Ready
+	/**
+	 * Potom ako ju spracuje ICookUserRole sa nastavi na READY
+	 * @param order
+	 * @throws ActionUnsuccessfullException
+	 */
 	after(IOrder order) throws ActionUnsuccessfullException : call(public void ICookUserRole+.cookOrderMeals(IOrder)) && args(order) {
 		order.setState(OrderState.READY);
 	}
 	
-	//before() : call(Delivery.shipOrder) - Shipping
+	/**
+	 * Pred tym ako ju IDeliveryUserRole doruci je nastavena na SHIPPING
+	 * @param order
+	 * @throws ActionUnsuccessfullException
+	 */
 	before(IOrder order) throws ActionUnsuccessfullException : call(public void IDeliveryUserRole+.shipOrder(IOrder)) && args(order) {
 		order.setState(OrderState.SHIPPING);
 	}
-	//after() : call(Delivery.shipOrder) - Finished
+	
+	/**
+	 * Potom ako ju IDeliveryUserRole doruci je nastavena na FINISHED
+	 * @param order
+	 * @throws ActionUnsuccessfullException
+	 */
 	after(IOrder order) throws ActionUnsuccessfullException : call(public void IDeliveryUserRole+.shipOrder(IOrder)) && args(order) {
 		order.setState(OrderState.FINISHED);
 	}

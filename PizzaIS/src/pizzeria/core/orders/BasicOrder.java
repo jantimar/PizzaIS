@@ -9,7 +9,11 @@ import java.util.Map;
 import pizzeria.core.customers.ICustomer;
 import pizzeria.core.meals.Meal;
 import pizzeria.core.utils.ActionUnsuccessfullException;
-
+/**
+ * Zakladna nespecifikovana objednavka splnajuca vsetky poziadavky na objednavku
+ * @author Michal Vrabel
+ *
+ */
 public class BasicOrder implements IOrder {
 	/** jedla v objednavke */
 	protected List<Meal> meals;
@@ -55,7 +59,7 @@ public class BasicOrder implements IOrder {
 		float prize = 0;
 		for(Meal actualPizza : meals)
 		{
-			prize += actualPizza.getOutcome();
+			prize += actualPizza.getPrice();
 		}
 		return prize;
 	}
@@ -103,34 +107,46 @@ public class BasicOrder implements IOrder {
 		return new ArrayList<Meal>(meals);
 	}
 
-	public BasicOrder(){
+	public BasicOrder(ICustomer customer){
 		this.meals = new ArrayList<Meal>();
+		this.customer = customer;
 	}
 		
-	public BasicOrder(Collection<Meal> meals){
+	public BasicOrder(ICustomer customer, Collection<Meal> meals){
 		this.meals = new ArrayList<Meal>(meals); 
+		this.customer = customer;
 	}
 	
-	public BasicOrder(OrderState orderState, Collection<Meal> meals){
-		this(-1,orderState,meals);
+	public BasicOrder(ICustomer customer, OrderState orderState, Collection<Meal> meals){
+		this(-1,customer,orderState,meals);
 	}
 	
-	public BasicOrder(int id, OrderState orderState, Collection<Meal> meals){
+	public BasicOrder(int id, ICustomer customer, OrderState orderState, Collection<Meal> meals){
 		this.id = id;
 		this.orderState = orderState;
 		this.meals = new ArrayList<Meal>(meals); 
+		this.customer = customer;
 	}
-
+	
+	/**
+	 * Vlozenie meta informacie
+	 */
 	@Override
 	public void putMeta(String key, Object data) {
 		this.orderMeta.put(key, data);
 	}
-
+	
+	/**
+	 * Ziskanie meta informacie
+	 */
 	@Override
 	public Object getMeta(String key) {
 		return this.orderMeta.get(key);
 	}
 
+	/**
+	 * Zistenie ci ma nastavenu meta informaciu pre zadany kluc
+	 */
 	@Override
 	public boolean containsMetaKey(String key) {
 		return this.orderMeta.containsKey(key);

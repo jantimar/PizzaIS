@@ -3,7 +3,7 @@ package pizzeria.core.userroles;
 import pizzeria.core.orders.IOrder;
 import pizzeria.core.utils.ActionUnsuccessfullException;
 /**
- * Pohlad na obchod z pohladu casnika - aktivnej entity systemu
+ * Pohlad na obchod z pohladu aktivnej entity systemu casnika - pridava objednavky
  * @author Michal Vrabel
  *
  */

@@ -1,6 +1,6 @@
 package pizzeria.core.userroles;
 /**
- * Aktiva entita v obchode poskytujuca nejake akcie pre pracu s obchodom
+ * Aktiva entita v obchode poskytujuca akcie s objednavkami v PizzaShop
  * @author uzivatel
  *
  */

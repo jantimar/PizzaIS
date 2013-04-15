@@ -1,4 +1,4 @@
-package pizzeria.swingui;
+package pizzeria.swingui.windows;
 
 import java.awt.EventQueue;
 
@@ -21,11 +21,19 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
+
+import pizzeria.swingui.IUser;
+
 import java.awt.Font;
+import net.miginfocom.swing.MigLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MainWindow {
 
-	private JFrame frame;
+	private IUser userCapabilities;
+	
+	private JFrame frmPizzaIs;
 	private JTable table;
 
 //	/**
@@ -47,7 +55,7 @@ public class MainWindow {
 	/**
 	 * Create the application.
 	 */
-	public MainWindow() {
+	public MainWindow(IUser userCapabilities) {
 		initialize();
 	}
 
@@ -55,32 +63,28 @@ public class MainWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-		
-		JPanel panel = new JPanel();
-		frame.getContentPane().add(panel);
-		panel.setLayout(new GridLayout(0, 3, 0, 0));
+		frmPizzaIs = new JFrame();
+		frmPizzaIs.setTitle("Pizza IS");
+		frmPizzaIs.setBounds(100, 100, 450, 300);
+		frmPizzaIs.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmPizzaIs.getContentPane().setLayout(new MigLayout("", "[434px]", "[][grow,fill][]"));
 		
 		JButton btnAddOrder = new JButton("Add order");
-		panel.add(btnAddOrder);
 		
-		Component horizontalStrut = Box.createHorizontalStrut(20);
-		panel.add(horizontalStrut);
+		btnAddOrder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+			}
+		});
+		
+		frmPizzaIs.getContentPane().add(btnAddOrder, "flowx,cell 0 0");
 		
 		JButton btnNewButton = new JButton("Remove selected");
-		panel.add(btnNewButton);
-		
-		JPanel panel_1 = new JPanel();
-		frame.getContentPane().add(panel_1);
-		panel_1.setLayout(new BorderLayout(0, 0));
-		
-		JSeparator separator = new JSeparator();
-		panel_1.add(separator);
+		frmPizzaIs.getContentPane().add(btnNewButton, "cell 0 0");
 		
 		table = new JTable();
+		frmPizzaIs.getContentPane().add(table, "cell 0 1,grow");
 		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -92,23 +96,18 @@ public class MainWindow {
 				"New column", "New column", "New column", "New column"
 			}
 		));
-		panel_1.add(table, BorderLayout.NORTH);
-		
-		JPanel panel_2 = new JPanel();
-		frame.getContentPane().add(panel_2);
-		panel_2.setLayout(new FlowLayout(FlowLayout.TRAILING, 5, 5));
 		
 		JLabel lblSignedInAs = new JLabel("Signed in as:");
+		frmPizzaIs.getContentPane().add(lblSignedInAs, "flowx,cell 0 2,alignx right");
 		lblSignedInAs.setHorizontalAlignment(SwingConstants.TRAILING);
-		panel_2.add(lblSignedInAs);
 		
 		JLabel lblWaiter = new JLabel("waiter");
+		frmPizzaIs.getContentPane().add(lblWaiter, "cell 0 2,alignx right");
 		lblWaiter.setHorizontalAlignment(SwingConstants.TRAILING);
-		panel_2.add(lblWaiter);
 		
 		JButton btnSignOut = new JButton("Sign out");
+		frmPizzaIs.getContentPane().add(btnSignOut, "cell 0 2,alignx right");
 		btnSignOut.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		panel_2.add(btnSignOut);
 		
 //		JLabel label = new JLabel("");
 //		frame.getContentPane().add(label);
@@ -117,4 +116,12 @@ public class MainWindow {
 //		frame.getContentPane().add(lblAaa);
 	}
 
+	public  void renderOrders(){
+		
+	}
+	
+	public void open(){
+		
+	}
+	
 }

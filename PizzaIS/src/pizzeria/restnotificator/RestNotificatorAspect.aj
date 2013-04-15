@@ -16,6 +16,7 @@ public aspect RestNotificatorAspect {
 	{
 		if(order.getCustomer() instanceof IRegisteredCustomer)
 		{
+// odkomentovat ked ine casti aplikaciu budu fungovat nech to teraz nekomplikuje situaciu			
 //			RestClient restClient = new RestClient("http://pizzais.apphb.com/order/changestate");
 //			//RestClient restClient = new RestClient("http://localhost:54387/order/changestate");
 //			JSONObject obj = new JSONObject();
