@@ -22,6 +22,8 @@ public class BasicOrder implements IOrder {
 	/** meta informacie objednavky - napriklad informacie o pracovnikoch ktory ju spracovali */
 	protected Map<String,Object> orderMeta = new HashMap<String,Object>();
 	
+	
+	
 	/**
 	 * Zakaznik
 	 */
