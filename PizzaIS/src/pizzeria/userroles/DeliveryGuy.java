@@ -7,12 +7,13 @@ import pizzeria.core.orders.IOrder;
 
 import pizzeria.core.orders.OrderState;
 import pizzeria.core.userroles.IDeliveryUserRole;
+import pizzeria.core.userroles.IRemovesOrderUserRole;
 import pizzeria.core.userroles.IWaiterUserRole;
 import pizzeria.core.utils.ActionUnsuccessfullException;
 import pizzeria.userroles.AbstractRole;
 
 /**Trieda reprezentujuca donasku pizze*/
-public class DeliveryGuy extends AbstractRole implements IDeliveryUserRole, IWaiterUserRole {
+public class DeliveryGuy extends AbstractRole implements IDeliveryUserRole, IWaiterUserRole, IRemovesOrderUserRole {
 
 	public DeliveryGuy(PizzaShop shop) {
 		this.name = DeliveryGuy.class.toString();
@@ -33,5 +34,9 @@ public class DeliveryGuy extends AbstractRole implements IDeliveryUserRole, IWai
 		pizzaShop.addOrder(order);
 	}
 
+	@Override
+	public void removeOrder(IOrder order) {
+		pizzaShop.removeOrder(order);
+	}
 	
 }

@@ -5,7 +5,7 @@ import pizzeria.core.utils.ActionUnsuccessfullException;
 
 /**
  * Kontrola poradia zmeny stavu objednávky. Mierne diskutabilne
- * @author 
+ * @author Michal Vrabel
  *
  */
 public aspect OrderStateChangePolicyAspect {

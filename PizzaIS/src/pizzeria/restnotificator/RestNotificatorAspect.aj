@@ -40,5 +40,6 @@ public aspect RestNotificatorAspect {
 			e.printStackTrace();
 		}
 		return response;
+
 	}
 }

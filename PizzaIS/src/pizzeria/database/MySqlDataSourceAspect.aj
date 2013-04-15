@@ -18,6 +18,16 @@ public aspect MySqlDataSourceAspect {
 		shop.dataLoader.LoadBasicStructure(shop);
 	}
 		
+// !within(MySqlDataLoader)
+//	around() : RegisterMeal() 
+//	 
+//	around() : UnregisterMeal()
+//	around() : AddOrder() 
+//
+//	around() : RemoveOrder() 
+//
+//	around() : GetAllIngredients()
+	
 //	after(PizzaShop pizzashop) : execution(PizzaShop.new(..)) && this(pizzashop) {
 //		if(pizzashop.getContextData("installDatabase").equals(true)){
 //			

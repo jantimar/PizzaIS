@@ -3,6 +3,7 @@ package pizzeria;
 import java.util.Collection;
 
 import pizzeria.core.PizzaShop;
+import pizzeria.core.customers.GuestCustomer;
 import pizzeria.core.meals.Meal;
 import pizzeria.core.orders.PersonalOrder;
 import pizzeria.core.utils.ActionUnsuccessfullException;
@@ -21,8 +22,10 @@ public class PizzaIS {
 		PizzaShop shop = new PizzaShop();
 		
 		//------------------------
-		
-		
+		// toto si pouzivajte ak potrebujete na tesovanie. 
+		// Tu zatial nevyzera zeby tu daco malo byt ine ako 
+		// PizzaShop shop = new PizzaShop();
+		// necommitujte tento subor
 		//--------------------------
 		
 		Collection<Meal> meals = shop.getMealsMenu().getAllMealsCollection();
@@ -31,7 +34,8 @@ public class PizzaIS {
 		
 		Meal mymeal = meals.iterator().next(); // nejake sa zvoli
 		
-		PersonalOrder myOrder = new PersonalOrder(5);
+		PersonalOrder myOrder = new PersonalOrder(new GuestCustomer("ujo v cervenom rolaku"));
+		myOrder.setTableNumber(5);
 		myOrder.addMeal(mymeal);
 		
 		

@@ -5,15 +5,23 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import pizzeria.core.utils.AbstractContextProvider;
 
-
-public class MealsMenu extends AbstractContextProvider {
+/**
+ * Ponuka jedal v obchode
+ * @author Michal Vrabel
+ *
+ */
+public class MealsMenu {
 	
 	private MealCategory defaultCategory = null;
 	
 	private Set<MealCategory> mealCategories;
 	
+	/**
+	 * Vynimka hovriaca o tom ze sa pouzila nespravna kategoria jedal
+	 * @author Michal Vrabel
+	 *
+	 */
 	public class InvalidMealCategoryException extends Exception {
 		private static final long serialVersionUID = 1L;
 
@@ -21,7 +29,11 @@ public class MealsMenu extends AbstractContextProvider {
 			super(message);
 		}
 	}
-	
+	/**
+	 * Najdenie kategorie na zaklade mena
+	 * @param name
+	 * @return
+	 */
 	public MealCategory findCategoryByName(String name){
 		MealCategory result = null;
 		for(MealCategory category : mealCategories){
@@ -32,14 +44,20 @@ public class MealsMenu extends AbstractContextProvider {
 		}
 		return result;
 	}
-	
+	/**
+	 * Ziskanie zakladnej kategorie
+	 * @return
+	 */
 	public MealCategory getDefaultCategory() {
 		if(defaultCategory == null){
 			setDefaultCategoryByName("pizza");
 		}
 		return defaultCategory;
 	}
-
+	/**
+	 * Nastavenie zakladnej kategorie
+	 * @param name
+	 */
 	public void setDefaultCategoryByName(String name) {
 		MealCategory mealCategory = this.findCategoryByName(name);
 		if(mealCategory == null){
@@ -48,11 +66,17 @@ public class MealsMenu extends AbstractContextProvider {
 		}
 		this.defaultCategory = mealCategory;
 	}
-
+	/**
+	 * Ziskanie zoznamu kategorii
+	 * @return
+	 */
 	public Collection<MealCategory> getMealCategoriesCollection() {
 		return new ArrayList<MealCategory>(mealCategories);
 	}
-	
+	/**
+	 * Ziskanie vsetkych jedal na jedalnom listku
+	 * @return
+	 */
 	public Collection<Meal> getAllMealsCollection() {
 		ArrayList<Meal> meals = new ArrayList<Meal>();
 		
@@ -67,7 +91,7 @@ public class MealsMenu extends AbstractContextProvider {
 	}
 
 	/**
-	 * 
+	 * Zaregistorvanie kategorie
 	 * @param category
 	 * @throws InvalidMealCategoryException 
 	 */
@@ -79,13 +103,17 @@ public class MealsMenu extends AbstractContextProvider {
 	}
 
 	/**
-	 * 
+	 * Odregistorvanie kategorie
 	 * @param category
 	 */
 	public void unregisteCategory(MealCategory category) {
 		mealCategories.remove(category);
 	}
-
+	/**
+	 * Zaregistrovanie kategorie pouzitim mena kategorie
+	 * @param categoryName
+	 * @throws InvalidMealCategoryException
+	 */
 	public void registerCategoryByName(String categoryName) throws InvalidMealCategoryException{
 		if(findCategoryByName(categoryName) != null){
 			throw new InvalidMealCategoryException(String.format("Category with name \"%s\" already exists",categoryName));
@@ -94,7 +122,7 @@ public class MealsMenu extends AbstractContextProvider {
 	}
 	
 	/**
-	 * 
+	 * Zaregistrovanie jedla na jedalny listok (do vychodzej kategorie)
 	 * @param category
 	 */
 	public void registerMeal(Meal meal) {
@@ -102,7 +130,7 @@ public class MealsMenu extends AbstractContextProvider {
 	}
 
 	/**
-	 * 
+	 * Odregistrovanie jedla z listku (z vychodzej kategorie)
 	 * @param category
 	 */
 	public void unregisteMeal(Meal meal) {

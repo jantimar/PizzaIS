@@ -34,8 +34,5 @@ public aspect StockFillerAspect {
 		if(diff < 0){
 			stock.addIngredient(ingredient, -diff);
 		}
-//		if(stock.getContext().containsKey(StockAutoFiller.CONTEXT_KEY)){
-//			StockAutoFiller config = (StockAutoFiller)stock.getContext().getData(StockAutoFiller.CONTEXT_KEY);
-//		}
 	}
 }

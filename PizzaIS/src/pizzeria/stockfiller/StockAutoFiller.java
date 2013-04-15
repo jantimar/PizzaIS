@@ -2,13 +2,13 @@ package pizzeria.stockfiller;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import pizzeria.core.stock.Ingredient;
-import pizzeria.core.utils.IContextProvider;
-import pizzeria.core.utils.IPizzaShopExtension;
-public class StockAutoFiller implements IPizzaShopExtension{
-	
-	public static final String CONTEXT_KEY = StockAutoFiller.class.getName();
+/**
+ * Kontrola stavu poloziek na skalde
+ * @author Michal Vrabel
+ *
+ */
+public class StockAutoFiller{
 	
 	private int defaultThreshold;
 
@@ -48,10 +48,5 @@ public class StockAutoFiller implements IPizzaShopExtension{
 		}
 		return threshold;
 	}
-	
-	@Override
-	public void installTo(IContextProvider contextProvider) {
-		contextProvider.getContext().putData(CONTEXT_KEY,this);
-	}
-	
+		
 }

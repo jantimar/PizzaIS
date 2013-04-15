@@ -9,15 +9,25 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
-
+/**
+ * Nastroj pre pracu s mapou typu Map<String,Float> a moznostou ulozit udaje do suboru.
+ * Moze byt odstranene.
+ * @author Michal Vrabel
+ *
+ */
 public class ActionCostConfig {
 	
 	private float defaultActionCost;
 	
 	Map<String,Float> actionCosts = new HashMap<String,Float>();
-		
+	
+	public ActionCostConfig(float defaultActionCost){
+		this.defaultActionCost = defaultActionCost;
+	}
+	
 	public ActionCostConfig(String actionCostsFile, float defaultActionCost) throws FileNotFoundException, IOException {
 		loadPricesFromFile(actionCostsFile);
+		this.defaultActionCost = defaultActionCost;
 	}
 	
 	public float getDefaultActionCost() {

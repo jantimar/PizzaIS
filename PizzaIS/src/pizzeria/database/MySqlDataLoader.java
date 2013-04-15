@@ -9,7 +9,11 @@ import pizzeria.core.stock.Ingredient;
 import pizzeria.core.stock.IngredientAssoc;
 import pizzeria.core.stock.Stock;
 
-
+/**
+ * Trieda zaobalujuca operacie pre nacitavanie informacii z databazy
+ * @author uzivatel
+ *
+ */
 public class MySqlDataLoader {
 
 //	public List<Order> getOrders() {

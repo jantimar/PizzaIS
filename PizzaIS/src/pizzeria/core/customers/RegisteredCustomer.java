@@ -4,7 +4,7 @@ package pizzeria.core.customers;
  * @author Michal Vrabel
  *
  */
-public class RegisteredCutomer implements IRegisteredCustomer {
+public class RegisteredCustomer implements IRegisteredCustomer {
 	private int id = -1;
 	private String name;
 	private String address;
@@ -45,5 +45,16 @@ public class RegisteredCutomer implements IRegisteredCustomer {
 	@Override
 	public String getAddress() {
 		return address;
+	}
+	/**
+	 * Porovnavanie ak sa porovnava s IRegisteredCustomer pozera sa na id, name, address
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof IRegisteredCustomer){
+			IRegisteredCustomer cust = (IRegisteredCustomer) obj;
+			return (this.id == cust.getId()) && (this.name == cust.getName()) && (this.address == cust.getAddress());
+		}
+		return super.equals(obj);
 	}
 }

@@ -3,13 +3,12 @@ package pizzeria.core.stock;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import pizzeria.core.utils.AbstractContextProvider;
 /**
  * Trieda predsavujuca sklad surovin
  * @author Michal Vrabel
  *
  */
-public class Stock extends AbstractContextProvider {
+public class Stock {
 	
 	/**
 	 * Zoznam asociacii surovina - pocet
