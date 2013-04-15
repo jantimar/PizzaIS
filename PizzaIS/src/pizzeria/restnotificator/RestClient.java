@@ -24,6 +24,8 @@ public class RestClient {
     private String message;
 
     private String response;
+    
+    private String param;
 
     public String getResponse()
     {
