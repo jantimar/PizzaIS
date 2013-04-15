@@ -25,5 +25,9 @@ public aspect OrderStateAspect {
 	{
 		order.setState(annotationState.orderState());
 	}
-
+	
+	after (IOrder order,OrderState state): execution(public void IOrder.setState(OrderState)) && this(order) && args(state) 
+	{
+		//TODO odosielanie na server asi vytvorit novu triedu na komunikaciu a tam to hodit
+	}
 }
