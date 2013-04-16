@@ -151,4 +151,16 @@ public class MealsMenu {
 		this.mealCategories.add(new MealCategory(defaultCategoryName,meals));
 	}
 	
+	public Meal getMealByName(String name)
+	{
+		Meal returnMeal = null;
+		for(Meal actualMeal : getAllMealsCollection())
+		{
+			if(actualMeal.getName() == name){
+				returnMeal = actualMeal;
+				break;
+			}
+		}
+		return returnMeal;
+	}
 }

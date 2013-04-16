@@ -18,6 +18,15 @@ public class RegisteredCustomer implements IRegisteredCustomer {
 		this.address = address;
 	}
 	
+	public RegisteredCustomer(int id)
+	{
+		this.id = id;
+	//TODO dalsie data natahovat z databazy
+		this.description = "popis";
+		this.name = "jan";
+		this.address = "KP256";
+	}
+	
 	/**
 	 * Jenoduchy popis
 	 */
