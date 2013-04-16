@@ -10,7 +10,7 @@ public class RegisteredCustomer implements IRegisteredCustomer {
 	private String address;
 	private String description;
 	
-	public RegisteredCutomer(String description,int id, String name,String address)
+	public RegisteredCustomer(String description,int id, String name,String address)
 	{
 		this.description = description;
 		this.id = id;
