@@ -95,8 +95,7 @@ public class RestClient {
 
             request.setHeader("Accept", "application/json");
             request.setHeader("Content-type", "application/json");
-            
-            System.out.println("param " + param);
+
             request.setEntity(new StringEntity(param));
             
             executeRequest(request, url);

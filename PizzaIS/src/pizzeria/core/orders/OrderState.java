@@ -18,6 +18,10 @@ public enum OrderState {
 	// Objednavka ??? bola zrusena ??? - nevyuzivane
 	REPAYMENT(6);
 	
+    public int getStep() {
+        return step;
+    }
+    
 	/**
 	 * Kontroluje ci je zmena stavu maximalne o jeden krok 
 	 * @param originalState
