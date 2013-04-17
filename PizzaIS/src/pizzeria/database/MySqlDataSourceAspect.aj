@@ -1,6 +1,7 @@
 package pizzeria.database;
 
 import pizzeria.core.PizzaShop;
+import pizzeria.loyaltyprogram.LoyaltyProgram;
 
 //import pizzais.mvcore.PizzaShop;
 
@@ -16,6 +17,11 @@ public aspect MySqlDataSourceAspect {
 	after(PizzaShop shop) : execution(PizzaShop.new(..)) && this(shop) {
 		shop.dataLoader = new MySqlDataLoader();
 		shop.dataLoader.LoadBasicStructure(shop);
+	}
+	
+	after(LoyaltyProgram lp) : execution(LoyaltyProgram.new(..)) && this(lp) {
+		MySqlDataLoader dataLoader = new MySqlDataLoader();
+		dataLoader.LoadLoyaltyProgram(lp);
 	}
 		
 // !within(MySqlDataLoader)

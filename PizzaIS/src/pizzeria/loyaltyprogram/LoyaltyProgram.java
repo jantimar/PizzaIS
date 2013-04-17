@@ -46,6 +46,13 @@ public class LoyaltyProgram {
 		return new HashMap<IRegisteredCustomer,Integer>(pointsCustAssoc);
 	}
 	/**
+	 * Importovanie mapy Zakaznikov(kluc) a bodov(hodnota) (pri nacitani z db)
+	 * @return
+	 */
+	public void setCustomerPointsMap(Map<IRegisteredCustomer,Integer> map){
+		this.pointsCustAssoc = map;
+	}
+	/**
 	 * Ziskanie poctu bodov zakaznika
 	 * @param customer
 	 * @return

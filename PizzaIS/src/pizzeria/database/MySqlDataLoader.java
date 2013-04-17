@@ -4,12 +4,22 @@ package pizzeria.database;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 import pizzeria.core.PizzaShop;
+import pizzeria.core.customers.IRegisteredCustomer;
+import pizzeria.core.customers.RegisteredCustomer;
 import pizzeria.core.meals.Meal;
 import pizzeria.core.meals.MealsMenu;
+import pizzeria.core.orders.DeliveryOrder;
+import pizzeria.core.orders.IOrder;
+import pizzeria.core.orders.OrderState;
+import pizzeria.core.orders.PersonalOrder;
 import pizzeria.core.stock.Ingredient;
 import pizzeria.core.stock.IngredientAssoc;
 import pizzeria.core.stock.Stock;
+import pizzeria.loyaltyprogram.LoyaltyProgram;
 
 /**
  * Trieda zaobalujuca operacie pre nacitavanie informacii z databazy
@@ -41,16 +51,6 @@ public class MySqlDataLoader {
 		try {
 			dbc = new DatabaseConnection();
 			
-			/*dbc.getResultSet("SELECT jedla.nazov AS nazov_jedla, " +
-             "jedla.cena AS cena_jedla, " +
-             "suroviny.nazov AS nazov_suroviny, " +
-             "suroviny.cena AS cena_suroviny, " +
-             "suroviny.pocet AS ostava_suroviny, " +
-             "suroviny_jedla.mnozstvo AS mnozstvo_na_jedlo " +
-             "FROM jedla, suroviny, suroviny_jedla " +
-             "WHERE suroviny_jedla.id_jedlo = jedla.id AND " +
-             "suroviny_jedla.id_suroviny = suroviny.id");*/
-			
 			// vyberie suroviny a ulozi ich do skladu
 			ResultSet surovina = dbc.getResultSet("SELECT * FROM suroviny");
 			while(surovina.next()) {
@@ -72,6 +72,44 @@ public class MySqlDataLoader {
 				Meal meal = new Meal(jedlo.getInt("id"), jedlo.getString("nazov"), jedlo.getFloat("cena"), suroviny);
 				menu.registerMeal(meal);
 			}
+			
+			// vyberie objednavky a zapise ich
+			ResultSet objednavka = dbc.getResultSet("SELECT objednavky.*, klienti.* " +
+													"FROM objednavky RIGHT JOIN klienti ON klienti.id=objednavky.klient_id");
+			while(objednavka.next()) {
+				RegisteredCustomer klient = null;
+				// ak je zakaznik, vytvorime ho
+				if(objednavka.getString("klienti.id")!=null) {
+					klient = new RegisteredCustomer(objednavka.getString("klienti.poznamka"), 
+																	  objednavka.getInt("klienti.id"), 
+																	  objednavka.getString("klienti.meno")+" "+objednavka.getString("klienti.priezvisko"), 
+																	  objednavka.getString("klienti.adresa"));
+				}
+				OrderState stav;
+				switch(objednavka.getInt("objednavky.stav")) {
+					case 1: stav = OrderState.NEW; break;
+					case 2: stav = OrderState.IN_PROGRESS; break;
+					case 3: stav = OrderState.READY; break;
+					case 4: stav = OrderState.SHIPPING; break;
+					case 5: stav = OrderState.FINISHED; break;
+					default: stav = OrderState.REPAYMENT; break;
+				}
+				
+				ArrayList<Meal> jedla = new ArrayList<Meal>();
+				ResultSet jedla_v_objednavke = dbc.getResultSet("SELECT id_jedla FROM objednavka_jedlo WHERE id_objednavka="+objednavka.getInt("objednavky.id"));
+				while(jedla_v_objednavke.next()) {
+					jedla.add(menu.getMealByID(jedla_v_objednavke.getInt("objednavka_jedlo")));
+				}
+				
+				IOrder order;
+				if(objednavka.getString("objednavky.typ_objednavky").equals("restauracia")) {
+					order = new PersonalOrder(objednavka.getInt("objednavky.id"), klient, stav, jedla);
+				} else {
+					order = new DeliveryOrder(objednavka.getInt("objednavky.id"), klient, stav, jedla);
+				}
+				shop.addOrder(order);
+			}
+			
 			
 		} catch (SQLException e) { 
 			// keby sa to nepodarilo vypise stack trace a nahodi tam tie defaultne, ktore si tu mal napisane
@@ -114,6 +152,30 @@ public class MySqlDataLoader {
 		
 		
 	}
+	
+	/**
+	 * Naplni zoznam pouzivatelov do Loyalty programu
+	 * @param shop
+	 */
+	public void LoadLoyaltyProgram(LoyaltyProgram lp){
+		DatabaseConnection dbc;
+		try {
+			dbc = new DatabaseConnection();
+			ResultSet pouzivatel = dbc.getResultSet("SELECT * FROM klienti");
+			Map<IRegisteredCustomer,Integer> map = new HashMap<IRegisteredCustomer,Integer>();
+			while(pouzivatel.next()) {
+				RegisteredCustomer klient = new RegisteredCustomer(pouzivatel.getString("poznamka"), 
+						pouzivatel.getInt("id"), 
+						pouzivatel.getString("meno")+" "+pouzivatel.getString("priezvisko"), 
+						pouzivatel.getString("adresa"));
+				map.put(klient, pouzivatel.getInt("body"));
+			}
+			lp.setCustomerPointsMap(map);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+		
 	/**
 	 * Vyprazdni udajove struktury obchodu
 	 * @param shop

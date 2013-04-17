@@ -5,6 +5,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import pizzeria.core.stock.Ingredient;
+import pizzeria.core.stock.IngredientAssoc;
+
 
 /**
  * Ponuka jedal v obchode
@@ -157,6 +160,24 @@ public class MealsMenu {
 		for(Meal actualMeal : getAllMealsCollection())
 		{
 			if(actualMeal.getName() == name){
+				returnMeal = actualMeal;
+				break;
+			}
+		}
+		return returnMeal;
+	}
+	
+	/**
+	 * Ziska jedlo podla ID
+	 * @param Integer id
+	 * @return
+	 */
+	public Meal getMealByID(Integer id){
+		Meal returnMeal = null;
+		
+		for(Meal actualMeal : getAllMealsCollection())
+		{
+			if(actualMeal.getId() == id){
 				returnMeal = actualMeal;
 				break;
 			}
