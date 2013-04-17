@@ -41,6 +41,24 @@ public class Stock {
 		
 		return result;
 	}
+    
+    /**
+	 * Vracia surovinu zo skladu podla ID
+	 * @param Integer id
+	 * @return
+	 */
+	public Ingredient getIngredient(Integer id){
+		Ingredient result = null;
+		
+		for(IngredientAssoc assoc : ingredientAssocs){
+			if(assoc.getIngredient().getId()==id){
+				result = assoc.getIngredient();
+				break;
+			}
+		}
+		
+		return result;
+	}
 	
 	/**
 	 * Prida zadanu surovinu do skladu v zadanej kvantite. 
