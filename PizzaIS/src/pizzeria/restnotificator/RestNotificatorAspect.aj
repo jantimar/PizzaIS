@@ -91,18 +91,18 @@ public aspect RestNotificatorAspect {
 	// posielanie POST restu na server
 	private String sendPost(String urlEnd, String json) {
 		String response = null;
-//		// String url = "http://pizzais.apphb.com/" + urlEnd;
-//		// String url = "http://localhost:49516/" + urlEnd;
+		String url = "http://pizzais.apphb.com/" + urlEnd;
+//		String url = "http://localhost:49516/" + urlEnd;
 //		String url = "http://jan:8080/" + urlEnd;
-//		RestClient restClient = new RestClient(url);
-//		try {
-//			restClient.SetPostParam(json);
-//			restClient.Execute(RequestMethod.POST);
-//			response = restClient.getResponse();
-//			System.out.println("response " + response);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		RestClient restClient = new RestClient(url);
+		try {
+			restClient.SetPostParam(json);
+			restClient.Execute(RequestMethod.POST);
+			response = restClient.getResponse();
+			System.out.println("response " + response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return response;
 	}
 
