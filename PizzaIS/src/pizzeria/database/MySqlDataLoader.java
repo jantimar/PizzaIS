@@ -85,29 +85,22 @@ public class MySqlDataLoader {
 																	  objednavka.getString("klienti.meno")+" "+objednavka.getString("klienti.priezvisko"), 
 																	  objednavka.getString("klienti.adresa"));
 				}
-				OrderState stav;
-				switch(objednavka.getInt("objednavky.stav")) {
-					case 1: stav = OrderState.NEW; break;
-					case 2: stav = OrderState.IN_PROGRESS; break;
-					case 3: stav = OrderState.READY; break;
-					case 4: stav = OrderState.SHIPPING; break;
-					case 5: stav = OrderState.FINISHED; break;
-					default: stav = OrderState.REPAYMENT; break;
-				}
+				OrderState stav = OrderState.getValueFromDB(objednavka.getInt("objednavky.stav"));
+				Integer typ = objednavka.getInt("objednavky.typ_objednavky");
 				
 				ArrayList<Meal> jedla = new ArrayList<Meal>();
-				ResultSet jedla_v_objednavke = dbc.getResultSet("SELECT id_jedla FROM objednavka_jedlo WHERE id_objednavka="+objednavka.getInt("objednavky.id"));
+				ResultSet jedla_v_objednavke = dbc.getResultSet("SELECT id_jedlo FROM objednavka_jedlo WHERE id_objednavka="+objednavka.getInt("objednavky.id"));
 				while(jedla_v_objednavke.next()) {
 					jedla.add(menu.getMealByID(jedla_v_objednavke.getInt("objednavka_jedlo")));
 				}
 				
 				IOrder order;
-				if(objednavka.getString("objednavky.typ_objednavky").equals("restauracia")) {
+				if(typ==0) {
 					order = new PersonalOrder(objednavka.getInt("objednavky.id"), klient, stav, jedla);
 				} else {
 					order = new DeliveryOrder(objednavka.getInt("objednavky.id"), klient, stav, jedla);
 				}
-				shop.addOrder(order);
+				//shop.addOrder(order);
 			}
 			
 			
@@ -171,6 +164,88 @@ public class MySqlDataLoader {
 				map.put(klient, pouzivatel.getInt("body"));
 			}
 			lp.setCustomerPointsMap(map);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Naplni zoznam pouzivatelov do Loyalty programu
+	 * @param shop
+	 */
+	public void insertOrder(IOrder order){
+		DatabaseConnection dbc;
+		try {
+			dbc = new DatabaseConnection();
+			String customer = "NULL";
+			Integer order_type = 0;
+			String ciel;
+			if(order.getCustomer() instanceof IRegisteredCustomer)
+				customer = ((Integer)((IRegisteredCustomer)order.getCustomer()).getId()).toString();
+			if(order instanceof DeliveryOrder) {
+				order_type = 1;
+				ciel = ((DeliveryOrder)order).getDestination();
+			} else {
+				ciel = ((Integer)((PersonalOrder)order).getTableNumber()).toString();
+			}
+				
+			Statement statement = dbc.getConnection().createStatement();
+			// vlozi medzi objednavky
+			statement.executeUpdate("INSERT INTO objednavky SET klient_id="+customer+", " +
+														"typ_objednavky="+order_type+", " +
+														"ciel='"+ciel+"', " +
+														"stav="+OrderState.getDBValue(order.getState()), Statement.RETURN_GENERATED_KEYS);
+			ResultSet keys = statement.getGeneratedKeys();
+			if(keys.next())
+				order.setId(keys.getInt(1));
+			// sparuje s jedlami
+			for(Meal jedlo : order.getMealsList()){
+				statement.executeUpdate("INSERT INTO objednavka_jedlo SET id_objednavka="+order.getId()+", id_jedlo="+jedlo.getId());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Prida do db surovinu resp. zvysi jej skladovu hodnotu
+	 * @param shop
+	 */
+	public void insertIngredient(Ingredient ingredient, int quantity){
+		DatabaseConnection dbc;
+		try {
+			dbc = new DatabaseConnection();
+			ResultSet surovina = dbc.getResultSet("SELECT COUNT(*) AS pocet FROM suroviny WHERE id="+ingredient.getId());
+			surovina.next();
+			Statement statement = dbc.getConnection().createStatement();
+			// ak ju v db nemame, vlozime
+			if(surovina.getInt("pocet")<1) {
+				statement.executeUpdate("INSERT INTO suroviny SET nazov='"+ingredient.getName()+"', " +
+															"cena="+ingredient.getPrice()+", " +
+															"pocet="+quantity, Statement.RETURN_GENERATED_KEYS);
+				ResultSet keys = statement.getGeneratedKeys();
+				if(keys.next())
+					ingredient.setId(keys.getInt(1));
+			} else { // inak zvysime pocet
+				statement.executeUpdate("UPDATE suroviny SET pocet=pocet+"+quantity+" WHERE id="+ingredient.getId());
+			}
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Zmeni body zakaznikovi
+	 * @param shop
+	 */
+	public void loyaltyPoints(IRegisteredCustomer zakaznik, int pocet, Boolean pridat){
+		DatabaseConnection dbc;
+		String sign = pridat?"+":"-";
+		try {
+			dbc = new DatabaseConnection();
+			Statement statement = dbc.getConnection().createStatement();
+			statement.executeUpdate("UPDATE klienti SET body=body"+sign+pocet+" WHERE id="+zakaznik.getId());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

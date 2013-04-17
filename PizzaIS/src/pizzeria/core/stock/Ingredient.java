@@ -17,6 +17,14 @@ public class Ingredient {
 	public int getId() {
 		return id;
 	}
+	
+	/**
+	 * Setter po ulozeni do DB
+	 * @return
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	/**
 	 * Meno

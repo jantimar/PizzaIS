@@ -41,6 +41,14 @@ public class BasicOrder implements IOrder {
 	public int getId() {
 		return id;
 	}
+	
+	/**
+	 * Setter IDecka, pri zapise objednavky do db
+	 * @param id
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	/**
 	 * Suma ktoru je potrebne za objednavku zaplatit

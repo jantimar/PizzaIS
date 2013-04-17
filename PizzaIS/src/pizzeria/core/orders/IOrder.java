@@ -17,6 +17,11 @@ public interface IOrder extends IMetaContainer {
 	 */
 	public int getId();
 	/**
+	 * Setter IDecka, pri zapise objednavky do db
+	 * @param id
+	 */
+	public void setId(Integer id);
+	/**
 	 * @return Suma ktoru ma zaplatit zakaznik. (Tolko penazi obchod dostane z dorucenia)
 	 */
 	public float getOrderBill();

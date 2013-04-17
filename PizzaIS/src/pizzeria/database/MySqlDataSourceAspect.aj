@@ -1,6 +1,9 @@
 package pizzeria.database;
 
 import pizzeria.core.PizzaShop;
+import pizzeria.core.customers.IRegisteredCustomer;
+import pizzeria.core.orders.IOrder;
+import pizzeria.core.stock.Ingredient;
 import pizzeria.loyaltyprogram.LoyaltyProgram;
 
 //import pizzais.mvcore.PizzaShop;
@@ -22,6 +25,30 @@ public aspect MySqlDataSourceAspect {
 	after(LoyaltyProgram lp) : execution(LoyaltyProgram.new(..)) && this(lp) {
 		MySqlDataLoader dataLoader = new MySqlDataLoader();
 		dataLoader.LoadLoyaltyProgram(lp);
+	}
+	
+	after(IOrder order) : execution(* pizzeria.*.*.addOrder(..)) && args(order)
+	{
+		MySqlDataLoader dataLoader = new MySqlDataLoader();
+		dataLoader.insertOrder(order);
+	}
+	
+	after(Ingredient ingredient, int quantity) : execution(* pizzeria.*.*.*.addIngredient(..)) && args(ingredient, quantity)
+	{
+		MySqlDataLoader dataLoader = new MySqlDataLoader();
+		dataLoader.insertIngredient(ingredient, quantity);
+	}
+	
+	after(IRegisteredCustomer customer, int points) : execution(* pizzeria.*.*.addPoints(..)) && args(customer, points)
+	{
+		MySqlDataLoader dataLoader = new MySqlDataLoader();
+		dataLoader.loyaltyPoints(customer, points, true);
+	}
+	
+	after(IRegisteredCustomer customer, int points) : execution(* pizzeria.*.*.takePoints(..)) && args(customer, points)
+	{
+		MySqlDataLoader dataLoader = new MySqlDataLoader();
+		dataLoader.loyaltyPoints(customer, points, false);
 	}
 		
 // !within(MySqlDataLoader)
