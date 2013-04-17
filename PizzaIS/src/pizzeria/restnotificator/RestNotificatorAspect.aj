@@ -81,6 +81,7 @@ public aspect RestNotificatorAspect {
 		try {
 			obj.put("State", order.getState().getStep());
 			obj.put("OrderID", order.getId());
+			obj.put("Price", order.getOrderBill());
 			sendPost("order/changestate", obj.toString());
 		} catch (JSONException e) {
 			e.printStackTrace();

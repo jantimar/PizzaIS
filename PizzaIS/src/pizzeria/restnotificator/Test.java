@@ -9,7 +9,7 @@ import pizzeria.core.utils.ActionUnsuccessfullException;
 public class Test {
 
 	public static void main(String[] args) {
-		DeliveryOrder delivery = new DeliveryOrder(new RegisteredCustomer("pospis",1, "Jhon","KP 256"));
+		DeliveryOrder delivery = new DeliveryOrder(new RegisteredCustomer(1));
 		try {
 			delivery.setState(OrderState.READY);
 //			delivery.setState(OrderState.IN_PROGRESS);
