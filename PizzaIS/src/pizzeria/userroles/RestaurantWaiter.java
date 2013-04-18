@@ -7,10 +7,10 @@ import pizzeria.core.userroles.*;
 import pizzeria.core.utils.ActionUnsuccessfullException;
 
 /**Trieda reprezentujuca casnika*/
-public class RestaurantWaiter extends AbstractRole implements IWaiterUserRole, IDeliveryUserRole, IRemovesOrderUserRole {
+public class RestaurantWaiter extends AbstractRole implements IWaiterUserRole, IDeliveryUserRole {
 
 	public RestaurantWaiter(PizzaShop shop){
-		this.name = RestaurantWaiter.class.toString();
+		this.name = RestaurantWaiter.class.getSimpleName();
 		this.description = " Accepts and ships orders";
 		this.pizzaShop = shop;
 	}
@@ -26,7 +26,7 @@ public class RestaurantWaiter extends AbstractRole implements IWaiterUserRole, I
 	}
 
 	@Override
-	public void removeOrder(IOrder order) {
+	public void removeOrder(IOrder order) throws ActionUnsuccessfullException {
 		pizzaShop.removeOrder(order);
 	}
 

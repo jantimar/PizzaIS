@@ -13,4 +13,5 @@ public interface IWaiterUserRole extends IUserRole {
 	 * @param order
 	 */
 	public void acceptOrder(IOrder order) throws ActionUnsuccessfullException;
+	public void removeOrder(IOrder order) throws ActionUnsuccessfullException;
 }

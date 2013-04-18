@@ -48,4 +48,8 @@ public class RegisteredCustomer implements IRegisteredCustomer {
 		}
 		return super.equals(obj);
 	}
+	@Override
+	public String toString() {
+		return name;
+	}
 }

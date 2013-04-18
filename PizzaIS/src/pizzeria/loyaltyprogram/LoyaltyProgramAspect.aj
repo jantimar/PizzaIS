@@ -2,8 +2,11 @@ package pizzeria.loyaltyprogram;
 
 import pizzeria.core.PizzaShop;
 import pizzeria.core.orders.*;
+import pizzeria.swingui.SwingUserInterfaceAspect;
 
 public aspect LoyaltyProgramAspect  {
+	
+	declare precedence: LoyaltyProgramAspect,SwingUserInterfaceAspect;
 	
 	pointcut pizzaShopCreation(PizzaShop shop) : execution(PizzaShop.new(..)) && this(shop); 
 	

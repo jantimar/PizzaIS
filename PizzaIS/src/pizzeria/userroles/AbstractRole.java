@@ -26,7 +26,7 @@ public abstract class AbstractRole implements IUserRole {
 	 */
 	public String getDescription()
 	{
-		return description;
+		return getDescription();
 	}
 
 	
@@ -34,5 +34,10 @@ public abstract class AbstractRole implements IUserRole {
 	public PizzaShop getPizzaShop()
 	{
 		return pizzaShop;
+	}
+	
+	@Override
+	public String toString() {
+		return getName();
 	}
 }

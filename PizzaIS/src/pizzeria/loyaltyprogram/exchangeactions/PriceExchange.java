@@ -7,9 +7,10 @@ public class PriceExchange extends AbstractExchangeAction {
 
 	private float exchangeRatio;
 	
-	public PriceExchange(){
+	public PriceExchange(float exchangeRatio){
 		this.name = "Price exchange";
 		this.description = "Changes points to lower price";
+		this.exchangeRatio = exchangeRatio;
 	}
 	
 	@Override

@@ -14,4 +14,9 @@ public class GuestCustomer implements ICustomer {
 	public GuestCustomer(String description){
 		this.description = description;
 	}
+	
+	@Override
+	public String toString() {
+		return description;
+	}
 }

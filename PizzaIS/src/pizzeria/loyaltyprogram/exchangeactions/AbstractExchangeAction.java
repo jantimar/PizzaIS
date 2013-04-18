@@ -25,4 +25,9 @@ public abstract class AbstractExchangeAction implements IExchangeAction {
 
 	@Override
 	public abstract float getOrderBill(int points, IOrder order, PizzaShop shop);
+	
+	@Override
+	public String toString() {
+		return this.getName();
+	}
 }

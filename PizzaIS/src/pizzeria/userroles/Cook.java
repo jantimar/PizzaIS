@@ -16,7 +16,7 @@ import pizzeria.core.utils.ActionUnsuccessfullException;
 public class Cook extends AbstractRole implements ICookUserRole {
 	
 	public Cook(PizzaShop shop) {
-		this.name = DeliveryGuy.class.toString();
+		this.name = DeliveryGuy.class.getSimpleName();
 		this.description = "Cooks food";
 		this.pizzaShop = shop;
 	}

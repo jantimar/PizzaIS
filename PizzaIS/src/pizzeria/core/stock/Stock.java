@@ -43,6 +43,24 @@ public class Stock {
 	}
 	
 	/**
+	 * Hlada ci sa pozadocana surovina nachadza v sklade na zaklade mena
+	 * @param name
+	 * @return
+	 */
+	public IngredientAssoc findIngredientAssocByName(String name){
+		IngredientAssoc result = null;
+		
+		for(IngredientAssoc assoc : ingredientAssocs){
+			if(assoc.getIngredient().getName().equals(name)){
+				result = assoc;
+				break;
+			}
+		}
+		
+		return result;
+	}
+	
+	/**
 	 * Prida zadanu surovinu do skladu v zadanej kvantite. 
 	 * Ak sa surovina v sklade nachadza tak sa zvysi mnozstvo suroviny na sklade
 	 * @param ingredient
